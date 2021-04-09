@@ -1,0 +1,24 @@
+<div class="container-fluid p-3" ng-show="!user || !user.user_id">
+    <div>Недостаточно учетных данных <a href="#/login">Войти</a> </div>
+</div>
+<div ng-show="user && user.user_id" class="container-fluid" style="margin-top: 50px;">
+    <div class="row mt-2" style="margin-bottom: 20px;">
+        <div class="col-9">
+            <div class="d-inline-block">
+                <h1 style="font-family: Montserrat, sans-serif;" class="mb-0">Проекты (канбан)</h1>
+            </div>
+        </div>
+    </div>
+    <label class="ml-2 mb-0">Выберите классификатор</label>
+    <select placeholder="Поиск по классификаторам" ng-change="getAllProjectsWithClassif(projectClassificator)" class="form-control my-2  mx-1 width500px" ng-model="projectClassificator">
+        <option  ng-repeat="clasif in projectClassificators"
+                value="{{clasif.class_id}}">
+            {{clasif.class_name}}
+        </option>
+    </select>
+    <div class="row">
+        <div class="col-12 overflow-auto">
+            <div id="myKanban"></div>
+        </div>
+    </div>
+</div>

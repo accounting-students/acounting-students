@@ -1,0 +1,11 @@
+# Local IDE files
+.idea
+
+# node
+*/config/default.json
+*/node_modules/
+*/package-lock.json
+
+#python
+venv
+/Server/src/config/default.json

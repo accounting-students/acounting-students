@@ -1,0 +1,29 @@
+{
+  "name": "expressapp",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "npm run compile && node dist\\app.js",
+    "compile": "babel src --out-dir dist --source-maps inline --copy-files",
+    "server": "nodemon --exec babel-node src\\app.js",
+    "server:local": "cross-env IP_ADDRESS=\"127.0.0.1\" npm run server"
+  },
+  "dependencies": {
+    "config": "^3.3.2",
+    "cross-env": "^7.0.2",
+    "docxtemplater": "^3.19.7",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "multer": "^1.4.2",
+    "pg": "^8.5.1",
+    "pizzip": "^3.0.6",
+    "request": "^2.88.2"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.12.8",
+    "@babel/core": "^7.12.9",
+    "@babel/node": "^7.12.6",
+    "@babel/preset-env": "^7.12.7",
+    "nodemon": "^2.0.6",
+    "yesql": "^4.1.3"
+  }
+}
