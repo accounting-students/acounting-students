@@ -47,7 +47,7 @@ myApp.config(function ($routeProvider) {
     var UserResolve = {
         authorizeCheck: function(userService) {
             //валидация пользователя (проверка авторизации)
-            return userService.resolveCheck();
+            //return userService.resolveCheck();
         }
     };
 
@@ -60,36 +60,30 @@ myApp.config(function ($routeProvider) {
         })
         .when('/main', {
             templateUrl: 'mainPage/mainPage.html',
-            controller: 'MainPageCtrl',
-            resolve: UserResolve
+            controller: 'MainPageCtrl'
         })
         .when('/notFound404', {
             templateUrl: 'notFound404/404.html',
         })
         .when('/mySuggestion', {
             templateUrl: 'mySuggestion/mySuggestion.html',
-            controller: 'MySuggestionCtrl',
-            resolve: UserResolve
+            controller: 'MySuggestionCtrl'
         })
         .when('/chat', {
             templateUrl: 'chat/chat.html',
-            controller: 'ChatCtrl',
-            resolve: UserResolve
+            controller: 'ChatCtrl'
         })
         .when('/createProject', {
             templateUrl: 'createProject/createProject.html',
-            controller: 'CreateProjectCtrl',
-            resolve: UserResolve
+            controller: 'CreateProjectCtrl'
         })
         .when('/statistic', {
             templateUrl: 'statistic/statistic.html',
-            controller: 'StatisticCtrl',
-            resolve: UserResolve
+            controller: 'StatisticCtrl'
         })
         .when('/project', {
             templateUrl: 'project/project.html',
-            controller: 'ProjectCtrl',
-            resolve: UserResolve
+            controller: 'ProjectCtrl'
         })
         .when('/settings', {
             templateUrl: 'settings/settings.html',

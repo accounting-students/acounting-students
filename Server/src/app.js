@@ -3,7 +3,7 @@ const {Pool} = require('pg');
 const multer = require('multer');
 import {getFromConfig, handleDefault, db} from './utils';
 
-const hostname = process.env.IP_ADDRESS || '10.0.0.6';
+const hostname = process.env.IP_ADDRESS || 'localhost';
 const port = 8081;
 const app = express();
 const savePool = (req, res, next) => {
@@ -20,9 +20,17 @@ const storageConfig = multer.diskStorage({
     }
 });
 
+var postgra = {
+        "user": "admin",
+        "host": "139.59.138.255",
+        "database": "postgres",
+        "password": "1",
+        "port": 5432
+ }
+
 var pool = null;
 const connectToDataBase = () => {
-    pool = new Pool(getFromConfig('postgresql'));
+    pool = new Pool(postgra);
 }
 
 const ALLOWED_ORIGINS = [
