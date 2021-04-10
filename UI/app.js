@@ -151,11 +151,16 @@ myApp.controller('UserCtrl', function ($scope, $rootScope, userService) { //эт
         $('.dropdown-menu').slideUp(0);
     }
     $scope.logOut = function(){
-        userService.deleteTokenFromCookie();
-        $scope.user = $rootScope.user = null;
-        userService.redirectTo("login")
-        tryDigest();
+        $scope.isAuthorized = !$scope.isAuthorized;
+        //userService.deleteTokenFromCookie();
+        //$scope.user = $rootScope.user = null;
+        //userService.redirectTo("login")
+        //tryDigest();
     };
+
+    $scope.logIn = function(){
+        $scope.isAuthorized = !$scope.isAuthorized;
+    }
 
     $scope.setSelectedTabInTab = function (value) {
         $scope.selectedTabInTab = value;
@@ -177,6 +182,15 @@ myApp.controller('UserCtrl', function ($scope, $rootScope, userService) { //эт
 
     $scope.getCurrentYear = function () {
         return new Date().getFullYear();
+    }
+
+    $scope.isUserAuthorized = function(){
+        return isAuthorized();
+    }
+
+    function isAuthorized(){
+        return $scope.isAuthorized;
+        //todo check auth
     }
 
 });

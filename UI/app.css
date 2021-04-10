@@ -9,6 +9,10 @@
     margin-left: 7px !important;
     margin-right: 7px !important;
 }
+body {
+    padding-top: 6.5rem;
+    font-size: 15px;
+}
 .navbarStyle{
     color: #ffffff !important;
     font-size: 14px !important;

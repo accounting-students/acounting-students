@@ -34,28 +34,33 @@
 
 <body class="ng-cloak" id="page-top">
 <div id="wrapper" ng-controller="UserCtrl">
-    <nav  class="navbar fixed-top navbar-white off-canvas" data-right-drawer="0" data-open-drawer="1" style="height: 100vh;width: 265px !important">
-        <div class="container-fluid flex-column pl-2">
-            <div class="d-flex flex-column justify-content-between justify-content-xl-center align-items-xl-center brand-line" style="margin-top: 70px;margin-left: -23px;">
-                <img ng-if="!user || !user.user_id || !user.profile_image "  src="images/icons/default-user.jpg" class="rounded-circle" style="margin-bottom: 18px;width: 90px;height: 90px;"  >
-                <img ng-if="user && user.user_id && user.profile_image" ng-src="{{user.profile_image}}" class="rounded-circle" style="margin-bottom: 18px;width: 90px;height: 90px;">
-                <a href="#/profile" class="href-style" style="color: #0D1C2E;">{{user.surname + ' ' + user.firstname}}</p>
+    <nav class="navbar navbar-expand-lg fixed-top border-bottom" ng-cloak >
+        <div class="container">
+            <a class="navbar-brand mb-0 h1" href="#/main">Сервис учёта практикантов</a>
+            <button id="Nav" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarContent"  >
+
+                <ul class="navbar-nav mr-auto" ng-if="isUserAuthorized()">
+                    <li class="nav-item ml-2"><a class="nav-link text-nowrap" href="#/projects"  ><i class="fab fa-buromobelexperte text-primary" style="margin-right: 15px;"></i>Проекты</a></li>
+                    <li class="nav-item ml-2"><a class="nav-link text-nowrap" href="#/universities"  ><i class="fa fa-university text-primary" style="margin-right: 15px;"></i>Вузы</a></li>
+                    <li class="nav-item ml-2"><a class="nav-link text-nowrap" href="#/users" ><i class="fa fa-user text-primary" style="margin-right: 15px;"></i>Студенты</a></li>
+                    <li class="nav-item ml-2"><a class="nav-link text-nowrap" href="#/kanban" ><i class="fa fa-clipboard text-primary" style="margin-right: 15px;"></i>Результаты проверки</a></li>
+
+                </ul>
+                <ul  class="navbar-nav ml-auto" ng-if="isUserAuthorized()">
+                    <li class="nav-item ml-2  " ><a class="nav-link text-nowrap" href="" ng-click="logOut()" ><i class="fas fa-power-off text-primary" style="margin-right: 15px;"></i>Выйти</a></li>
+                </ul>
+                <ul  class="navbar-nav ml-auto" ng-if="!isUserAuthorized()">
+                    <li class="nav-item ml-2 " ><a class="nav-link text-nowrap" href="" ng-click="logIn()" ><i class="fas fa-power-off text-primary" style="margin-right: 15px;"></i>Войти</a></li>
+                </ul>
             </div>
-            <ul class="nav navbar-nav flex-column drawer-menu" style="margin-top: 45px;">
-                <li class="nav-item ml-2"><a class="nav-link text-nowrap" href="#/main" style="margin-bottom: 15px;color: #707C97;"><i class="fab fa-buromobelexperte text-primary" style="margin-right: 15px;"></i>ГЛАВНАЯ</a></li>
-                <li class="nav-item ml-2"><a class="nav-link text-nowrap" href="#/mySuggestion" style="margin-bottom: 15px;color: #707C97;"><i class="fa fa-retweet text-primary" style="margin-right: 15px;"></i>МОИ ПРЕДЛОЖЕНИЯ</a></li>
-                <li class="nav-item ml-2"><a class="nav-link text-nowrap" href="#/users" style="margin-bottom: 15px;color: #707C97;"><i class="fa fa-user text-primary" style="margin-right: 15px;"></i>ПОЛЬЗОВАТЕЛИ</a></li>
-                <li class="nav-item ml-2"><a class="nav-link text-nowrap" href="#/kanban" style="margin-bottom: 15px;color: #707C97;"><i class="fa fa-clipboard text-primary" style="margin-right: 15px;"></i>ПРОЕКТЫ</a></li>
-                <li class="nav-item ml-2" ><a class="nav-link text-nowrap" href="#/statistic" style="margin-bottom: 15px;color: #707C97;"><i class="fa fa-star text-primary" style="margin-right: 15px;"></i>СТАТИСТИКА</a></li>
-                <li class="nav-item ml-2 mb-5" ><a class="nav-link text-nowrap" href="#/settings" style="margin-bottom: 15px;color: #707C97;"><i class="fa fa-star text-primary" style="margin-right: 15px;"></i>НАСТРОЙКИ</a></li>
-                <li class="nav-item ml-2 mt-5" ><a class="nav-link text-nowrap" href="" ng-click="logOut()" style="margin-top: 15px;color: #707C97;"><i class="fas fa-power-off text-primary" style="margin-right: 15px;"></i>ВЫЙТИ</a></li>
-            </ul>
         </div>
     </nav>
-    <div ng-view class="theme-showcase" ng-style="{'margin-left': (user && user.user_id) ? '265px':'unset'}" id="content-wrapper" role="main" style="background-color: #F8F8FB;"></div>
-
 </div>
-<!--<div class="d-contents bg-white sticky-footer" ng-include="'footer.html'"></div>-->
+<div ng-view class="mt-3" role="main"></div>
+<div class="d-contents bg-white sticky-footer" ng-include="'footer.html'"></div>
 
 <!--Plugins and other components-->
 <script src="bower_components/charts/google-charts.js"></script>

@@ -37,6 +37,7 @@ const ALLOWED_ORIGINS = [
   'http://168.63.58.52:80',
   'http://localhost:63342',
   'http://localhost:80',
+  //'http://localhost:8081',
   'http://ksutechrosset.northeurope.cloudapp.azure.com'
 ];
 
