@@ -112,6 +112,14 @@ myApp.config(function ($routeProvider) {
 
 });
 
+myApp.controller('CopyrightDateCtrl', function ($scope, dateFilter) {
+    $scope.date = new Date();
+    $scope.$watch('date', function (date)
+    {
+        $scope.dateString = dateFilter(date, 'yyyy');
+    });
+});
+
 myApp.controller('UserCtrl', function ($scope, $rootScope, userService) { //это контроллер , он ставится в шаблоне html ng-controller="UserCtrl" - и отвечает за видимость внутри вложенных dom элементов старницы
     $scope.isToggled = true;
 
