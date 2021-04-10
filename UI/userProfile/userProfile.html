@@ -1,4 +1,7 @@
-<div class="container" style="margin-top: 15px">
+<div class="container p-3" ng-show="!user && loaded">
+    <div>Недостаточно учетных данных <a href="#/main">На главную</a> </div>
+</div>
+<div ng-show="user" class="container" style="margin-top: 50px;">
     <div class="row" style="margin-bottom: 40px">
         <div class="col-4">
             <div class="row card" style="
@@ -13,11 +16,9 @@
                             <img src="images/man.png" alt="lorem" />
                         </div>
                     </div>
-                    <h3 style="margin-bottom: 25px">John Doe</h3>
-                    <h5 style="margin-bottom: 25px; color: rgb(97, 97, 97)">
-                        Профессия
-                    </h5>
-                    <p style="color: grey">Адрес проживания</p>
+                    <h3 style="margin-bottom: 25px">{{userProfile.lastName + ' ' +userProfile.firstName}}</h3>
+                    Основная специальность <h5 style="margin-bottom: 25px; color: rgb(97, 97, 97)">{{userProfile.mainSpecialty?userProfile.mainSpecialty:'Не указано'}}</h5>
+                    Адрес проживания <h5 style="margin-bottom: 25px; color: rgb(97, 97, 97)">{{userProfile.address}}</h5>
                 </div>
             </div>
             <div class="row card" style="background-color: white; border-radius: 3px; padding: 0px">
@@ -26,32 +27,32 @@
                         <div class="col-1 d-flex">
                             <img src="images/github.png" alt="lorem" />
                         </div>
-                        <div class="col-8" style="padding-left: 20px">GitHub</div>
-                        <div class="col-3">Fullname</div>
+                        <div class="col-6" style="padding-left: 20px">GitHub</div>
+                        <div class="col text-right mr-2">{{userProfile.github?userProfile.github:'-'}}</div>
                     </div>
                     <hr />
                     <div class="row" style="padding-left: 15px">
                         <div class="col-1 d-flex">
                             <img src="images/gitlab.png" alt="lorem" />
                         </div>
-                        <div class="col-8" style="padding-left: 20px">GitLab</div>
-                        <div class="col-3">Fullname</div>
+                        <div class="col-6" style="padding-left: 20px">GitLab</div>
+                        <div class="col text-right mr-2">{{userProfile.gitlab?userProfile.gitlab:'-'}}</div>
                     </div>
                     <hr />
                     <div class="row" style="padding-left: 15px">
                         <div class="col-1 d-flex">
                             <img src="images/telegram.png" alt="lorem" />
                         </div>
-                        <div class="col-8" style="padding-left: 20px">Telegram</div>
-                        <div class="col-3">Fullname</div>
+                        <div class="col-6" style="padding-left: 20px">Telegram</div>
+                        <div class="col text-right mr-2">{{userProfile.telegram?userProfile.telegram:'-'}}</div>
                     </div>
                     <hr />
                     <div class="row" style="padding-left: 15px">
                         <div class="col-1 d-flex">
                             <img src="images/skype.png" alt="lorem" />
                         </div>
-                        <div class="col-8" style="padding-left: 20px">Skype</div>
-                        <div class="col-3">Fullname</div>
+                        <div class="col-6" style="padding-left: 20px">Skype</div>
+                        <div class="col text-right mr-2">{{userProfile.skype?userProfile.skype:'-'}}</div>
                     </div>
                 </div>
             </div>
@@ -64,7 +65,7 @@
                             <span style="font-weight: 600">Полное имя</span>
                         </div>
                         <div class="col-7">
-                            <span>Петров Петр Петрович</span>
+                            <span>{{userProfile.lastName + ' ' +userProfile.firstName + ' ' +userProfile.patronymic}}</span>
                         </div>
                     </div>
                     <hr />
@@ -72,58 +73,44 @@
                         <div class="col-5 d-flex">
                             <span style="font-weight: 600">Email</span>
                         </div>
-                        <div class="col-7"><span>Fullname</span></div>
+                        <div class="col-7"><span>{{userProfile.email}}</span></div>
                     </div>
                     <hr />
                     <div class="row" style="padding-left: 20px">
                         <div class="col-5 d-flex">
                             <span style="font-weight: 600">Телефон</span>
                         </div>
-                        <div class="col-7"><span>Fullname</span></div>
+                        <div class="col-7"><span>{{userProfile.phone}}</span></div>
                     </div>
                     <hr />
                     <div class="row" style="padding-left: 20px">
                         <div class="col-5 d-flex">
                             <span style="font-weight: 600">ВУЗ</span>
                         </div>
-                        <div class="col-7"><span>Fullname</span></div>
+                        <div class="col-7"><span>{{userProfile.universityName}}</span></div>
                     </div>
                 </div>
             </div>
-            <div class="row card" style="background-color: white; border-radius: 3px; padding-top: 15px; padding-left: 10px; height: 375px;">
+            <div class="row card" style="background-color: white; border-radius: 3px; padding-top: 15px; padding-left: 10px; height: 430px;">
                 <div class="col">
                     <div class="row" style="margin-bottom: 15px">
-                        <div class="col text-dark"><h6>Компетенции</h6></div>
+                        <div class="col  "><span style="font-weight: 600">Компетенции</span></div>
                     </div>
                     <div class="row">
                         <div class="col">
-                            <div class="row">
+                            <div class="row" ng-repeat="competence in userProfile.competenceList">
                                 <div class="d-flex col-1" style="align-items: center; justify-content: center">
-                                    <p>
-                                        <i class="bi bi-check-square-fill" style="color: grey"></i>
-                                    </p>
+                                    <p><i class="bi" ng-class="{'bi-check-square-fill':competence.isChecked, 'bi-square':!competence.isChecked}" style="color: grey"></i></p>
                                 </div>
                                 <div class="col">
-                                    <p>PK-1 fnhjksdbhfjksdfjksdhfjksdhfjksdhfjksdfhjk</p>
+                                    <p>{{competence.competenceName}}</p>
                                 </div>
                                 <div class="d-flex col-2" style="align-items: center; justify-content: center">
-                                    <p>Ivanov</p>
+                                    <p>{{competence.mentorLastName}}</p>
                                 </div>
                                 <div class="d-flex col-2" style="align-items: center; justify-content: center">
-                                    <p>Ivanov</p>
+                                    <p>{{competence.mentorFirstName}}</p>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="d-flex col-1" style="align-items: center; justify-content: center">
-                                    <p><i class="bi bi-square" style="color: grey"></i></p>
-                                </div>
-                                <div class="col">
-                                    <p>PK-2 fnhjksdbhfjksdfjksdhfjksdhfjksdhfjksdfhjk</p>
-                                </div>
-                                <div class="d-flex col-2" style="align-items: center; justify-content: center">
-                                    <p>Ivanov</p>
-                                </div>
-                                <div class="d-flex col-2" style="align-items: center; justify-content: center"></div>
                             </div>
                         </div>
                     </div>
@@ -149,7 +136,7 @@
                                         <th class="text-dark pointer" width="150" ng-click="reverse1=!reverse1; order(reverse1, 'projectName')" >Название проекта</th>
                                         <th class="text-dark pointer"  ng-click="reverse2=!reverse2; order(reverse2, 'universityName')">ВУЗ</th>
                                         <th class="text-dark pointer"  ng-click="reverse3=!reverse3; order(reverse3, 'dateStart')">Дата начала</th>
-                                        <th class="text-dark pointer"  ng-click="reverse3=!reverse5; order(reverse5, 'dateEnd')">Дата окончания</th>
+                                        <th class="text-dark pointer"  ng-click="reverse5=!reverse5; order(reverse5, 'dateEnd')">Дата окончания</th>
                                         <th class="text-dark pointer"  ng-click="reverse4=!reverse4; order(reverse4, 'company')">Подробнее</th>
                                     </tr>
                                     </thead>
@@ -160,7 +147,7 @@
                                             {{project.projectName}}
                                         </td>
                                         <td>
-                                            <span class="badge badge-success rounded">{{project.projectStatus}}</span>
+                                            <span class="badge rounded {{project.statusClass}}" >{{project.projectStatus}}</span>
                                         </td>
                                         <td>
                                             {{project.universityName}}
@@ -172,22 +159,8 @@
                                             {{project.dateEnd}}
                                         </td>
                                         <td>
-                                            <button ng-click="showProjectModal()" class="btn btn-outline-primary px-3 py-2 ml-0 rounded">Подробнее</button>
+                                            <button ng-click="showProjectModal(project)" class="btn btn-outline-primary px-3 py-2 ml-0 rounded">Подробнее</button>
                                         </td>
-                                        <!-- <td>
-                                             <div  ng-mouseleave="user.isOpenedEdit= false" class="btn-group " ng-class="{'open': user.isOpenedEdit}">
-
-                                                 <div class="pointer">
-                                                     <i ng-click="user.isOpenedEdit=!user.isOpenedEdit" class="fas fa-ellipsis-h fa-lg"></i>
-                                                 </div>
-                                                 <ul  ng-mouseenter="user.isOpenedEdit= true"  class="dropdown-menu p-2" style="margin-left: -100px;">
-                                                     <li><a href="" ng-click="editUserModal(user)"><i class="fa fa-pencil fa-fw"></i>&nbsp;Редактировать</a></li>
-                                                     <li><a href="" onclick="alert('not realized')"><i class="fa fa-trash-o fa-fw"></i>&nbsp;Удалить</a></li>
-                                                     <li class="divider"></li>
-                                                     <li><a ng-click="user.isOpenedEdit=!user.isOpenedEdit && !inUserTableHover" href=""><i class="fa fa-close"></i>&nbsp;Закрыть</a></li>
-                                                 </ul>
-                                             </div>
-                                         </td>-->
                                     </tr>
                                     </tbody>
                                 </table>

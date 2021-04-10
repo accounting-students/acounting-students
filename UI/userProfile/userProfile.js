@@ -2,7 +2,7 @@
 
 var UserProfileCtrl = angular.module('myApp.userProfile', ['ngRoute']);
 
-UserProfileCtrl.controller('UserProfileCtrl', function ($scope, userService, infoService , $rootScope, projectService, commonsService) {
+UserProfileCtrl.controller('UserProfileCtrl', function ($scope, userService, infoService , $rootScope, projectService, commonsService, $location) {
 
     var userInt = setInterval(function(){
         if(userService.User) {
@@ -30,23 +30,17 @@ UserProfileCtrl.controller('UserProfileCtrl', function ($scope, userService, inf
         }
     }
 
-    $scope.createProject = function(){
-        projectService.projectStatusId = 1;
-        userService.redirectTo("createProject");
+    var userId = $location.$$search['userId'];
+    if(userId) {
+        $scope.userProfile = userService.getUserById(userId);
+    } else {
+        userService.redirectTo("main");
     }
 
-    $scope.redirectToProject = function(projectId){
-        if(projectId) {
-            projectService.projectId = projectId;
-            userService.redirectTo("project");
-        } else
-            infoService.infoFunction("Невозможно открыть проект: нет id проекта", "Ошибка");
-    }
-    $scope.showProjectModal = function(){
-        var modalInstance = projectService.showProjectModal();
-        modalInstance.result.then(function (response) {
+    $scope.showProjectModal = function(project) {
+        var modalInstance = projectService.showProjectModal(project);
 
-        }, function () {});
     }
+
 
 });

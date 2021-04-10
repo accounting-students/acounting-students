@@ -4,13 +4,13 @@ var StudentAttestationCtrl = angular.module('myApp.studentAttestation', ['ngRout
 
 StudentAttestationCtrl.controller('StudentAttestationCtrl', function ($scope, commonsService, userService) {
 
-
+    $scope.adminUserTypeId = userService.adminUserTypeId;
     var userInt = setInterval(function(){
         if(userService.User) {
             $scope.loaded  = true;
             clearInterval(userInt)
             $scope.user = userService.User;
-            getStudents();
+            getStudentsForEstimate();
             tryDigest();
         }
     },300)
@@ -21,14 +21,14 @@ StudentAttestationCtrl.controller('StudentAttestationCtrl', function ($scope, co
         }
     }
 
-    function getStudents(){
-        $scope.students = commonsService.studens;
+    $scope.studentsForEstimate = [];
+
+    function getStudentsForEstimate(){
+        $scope.studentsForEstimate = commonsService.studens;
     }
 
-    $scope.showUserProfile = function(){
-        var modalInstance = userService.showUserProfile();
-        modalInstance.result.then(function (response) {
-        }, function () {});
+    $scope.approve = function(student){
+
     }
 
     $scope.sortType ='lastname';
@@ -38,9 +38,6 @@ StudentAttestationCtrl.controller('StudentAttestationCtrl', function ($scope, co
         $scope.reverse = reverse;
     }
 
-    function getUniversities() {
-        $scope.universities = commonsService.universities;
-    }
 
 
 });

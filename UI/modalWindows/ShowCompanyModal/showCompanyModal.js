@@ -1,9 +1,11 @@
 
 var ShowCompanyCtrl = angular.module('myApp.showCompany', ['ngRoute', 'ui.bootstrap']);
 
-ShowCompanyCtrl.controller('ShowCompanyCtrl', function ($scope, $uibModalInstance, userService, infoService, regionService) {
+ShowCompanyCtrl.controller('ShowCompanyCtrl', function ($scope, $uibModalInstance, company, infoService, regionService) {
 
-    $scope.acceptProject = function(){
+    $scope.company = company;
+
+    $scope.wantToCompany = function(){
         close();
     }
 

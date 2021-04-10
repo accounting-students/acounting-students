@@ -1,11 +1,18 @@
 
 var ShowProjectModalCtrl = angular.module('myApp.showProject', ['ngRoute', 'ui.bootstrap']);
 
-ShowProjectModalCtrl.controller('ShowProjectModalCtrl', function ($scope, $uibModalInstance) {
+ShowProjectModalCtrl.controller('ShowProjectModalCtrl', function ($scope, $uibModalInstance, project) {
 
-    $scope.wantToCompany = function(){
-        close();
+    $scope.project = project;
+
+    $scope.approveProject = function (){
+
     }
+
+    $scope.rejectProject = function(){
+
+    }
+
 
     $scope.close = function () {
         close();

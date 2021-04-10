@@ -24,10 +24,10 @@
                         <table class="table">
                             <thead>
                             <tr style="height: 65px;">
-                                <th class="text-dark pointer" width="50">№</th>
-                                <th class="text-dark pointer">ФИО</th>
-                                <th class="text-dark pointer">ВУЗ</th>
-                                <th class="text-dark pointer">Специальность</th>
+                                <th class="text-dark bold pointer" width="50">№</th>
+                                <th class="text-dark bold pointer">ФИО</th>
+                                <th class="text-dark bold pointer">ВУЗ</th>
+                                <th class="text-dark bold pointer">Специальность</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -43,7 +43,7 @@
                                     {{student.specialty}}
                                 </td>
                                 <td>
-                                    <a ng-href="{{'#/profile?studentId=' + student.studentId}}" class="href-style px-3 py-2 ml-0 rounded">Профиль</a>
+                                    <a ng-href="{{'#/profile?userId=' + student.studentId}}" class="href-style px-3 py-2 ml-0 rounded">Профиль</a>
                                 </td>
                             </tr>
                             </tbody>

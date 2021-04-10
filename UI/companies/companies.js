@@ -26,8 +26,8 @@ CompaniesCtrl.controller('CompaniesCtrl', function ($scope, commonsService, user
         $scope.companies = commonsService.companies;
     }
 
-    $scope.showCompanyModal = function(){
-        var modalInstance = companyService.showCompanyModal();
+    $scope.showCompanyModal = function(company){
+        var modalInstance = companyService.showCompanyModal(company);
     }
 
     $scope.sortType ='lastname';

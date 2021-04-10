@@ -31,14 +31,15 @@ createProject.controller('ProjectCtrl', function ($scope, userService, projectSe
     $scope.createNewProject = function(){
         var modalInstance = projectService.createNewProject();
         modalInstance.result.then(function (response) {
-        }, function () {});
+            getAllProjects();
+        }, function () {
+            getAllProjects();
+        });
     }
 
-    $scope.showProjectModal = function(){
-        var modalInstance = projectService.showProjectModal();
-        modalInstance.result.then(function (response) {
+    $scope.showProjectModal = function(project) {
+        var modalInstance = projectService.showProjectModal(project);
 
-        }, function () {});
     }
 
 

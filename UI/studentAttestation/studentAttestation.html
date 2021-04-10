@@ -5,7 +5,7 @@
     <div class="row mt-2" style="margin-bottom: 20px;">
         <div class="col-6">
             <div class="d-inline-block">
-                <h1 class="text-dark" style="font-family: Montserrat, sans-serif;">Аттестация студентов</h1>
+                <h1 class="text-dark" style="font-family: Montserrat, sans-serif;">Аттестация {{(user.userTypeId == adminUserTypeId) ?'стажёров' : 'студентов' }}</h1>
 
             </div>
         </div>
@@ -19,30 +19,27 @@
         <div class="col-12" style="margin-right: 24px;">
             <div class="card mb-2">
                 <div class="card-body" style="padding: 0px;">
-                    <div class="table-responsive" ng-if="students && students.length>0">
+                    <div class="table-responsive" ng-if="studentsForEstimate && studentsForEstimate.length>0">
                         <table class="table">
                             <thead>
                             <tr style="height: 65px;">
-                                <th class="text-dark pointer" width="50">№</th>
-                                <th class="text-dark pointer">ФИО</th>
-                                <th class="text-dark pointer">ВУЗ</th>
-                                <th class="text-dark pointer">Специальность</th>
+                                <th class="text-dark bold pointer" width="50">№</th>
+                                <th class="text-dark bold pointer">ФИО</th>
+                                <th class="text-dark bold pointer">Компетенция</th>
+                                <th class="text-dark bold pointer"></th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr ng-repeat="student in students | orderObjectBy:sortType:reverse">
+                            <tr ng-repeat="student in studentsForEstimate | orderObjectBy:sortType:reverse">
                                 <td>{{$index+1}}</td>
                                 <td>
                                     {{student.name}}
                                 </td>
                                 <td>
-                                    {{student.university.universityName}}
+                                    {{student.competenceList.join(", ")}}
                                 </td>
-                                <td>
-                                    {{student.specialty}}
-                                </td>
-                                <td>
-                                    <a ng-href="{{'#/profile?studentId=' + student.studentId}}" class="href-style px-3 py-2 ml-0 rounded">Профиль</a>
+                                <td class="text-right">
+                                    <button ng-click="approve(student)" class="btn btn-outline-primary px-3 py-2 ml-0 rounded">Подтвердить</button>
                                 </td>
                             </tr>
                             </tbody>

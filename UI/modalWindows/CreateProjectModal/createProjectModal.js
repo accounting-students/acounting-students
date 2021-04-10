@@ -1,14 +1,21 @@
 
 var CreateProjectCtrl = angular.module('myApp.createProject', ['ngRoute', 'ui.bootstrap']);
 
-CreateProjectCtrl.controller('CreateProjectCtrl', function ($scope, $uibModalInstance, projectService, commonsService) {
+CreateProjectCtrl.controller('CreateProjectCtrl', function ($scope, $timeout, $uibModalInstance, projectService, commonsService) {
 
     $scope.newUser = {};
-    $scope.project = null;
-    $scope.universities = commonsService.universities;
+    $scope.project = {};
+
+    var universityDefault = {universityId:null, universityName:"Выберите университет"};
+    $scope.universities = [];
+    $scope.universities = JSON.parse(JSON.stringify(commonsService.universities));
+    $scope.universities.unshift(universityDefault)
+
+    $scope.project.university = $scope.universities[0];
 
     $scope.addProject = function(){
-        if($scope.project && $scope.project.projectName && $scope.project.description) {
+        if($scope.project && $scope.project.projectName && $scope.project.description && $scope.project.dateStart && $scope.project.dateEnd) {
+            if($scope.project.university) $scope.project.universityName = $scope.project.university
             projectService.addProject($scope.project).then(function () {
                 close();
             }, function (error) {
@@ -16,10 +23,10 @@ CreateProjectCtrl.controller('CreateProjectCtrl', function ($scope, $uibModalIns
             });
         } else {
             $scope.isError = true;
-            setTimeout(function () {
+            $timeout(function (){
                 $scope.isError = false;
                 tryDigest();
-            }, 1000)
+            }, 2000)
         }
     }
 
@@ -28,8 +35,8 @@ CreateProjectCtrl.controller('CreateProjectCtrl', function ($scope, $uibModalIns
     };
 
     function tryDigest() {
-        if (!$rootScope.$$phase) {
-            $rootScope.$apply();
+        if (!$scope.$$phase) {
+            $scope.$apply();
         }
     }
 
