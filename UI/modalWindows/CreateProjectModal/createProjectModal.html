@@ -1,0 +1,22 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h4 class="modal-title text-dark">Создание нового проекта</h4>
+        <button type="button" class="close btn-sm" ng-click="close()"><i class="fas fa-times small"></i> </button>
+    </div>
+    <div class="modal-body">
+        <input name="projectN" ng-class="{'ng-invalids':isError && !project.projectName}" type="text" placeholder="Название проекта" class="form-control my-2 mx-1" ng-model="project.projectName">
+        <input name="projectD" ng-class="{'ng-invalids':isError && !project.description}" type="text" placeholder="Описание проекта" type="password" class="form-control my-2 mx-1" ng-model="project.description">
+        <select placeholder="Выберите ВУЗ" class="form-control my-2 mx-1" ng-model="project.university">
+            <option ng-repeat="university in universities"
+                    value="{{university.universityId}}">
+                {{university.universityName}}
+            </option>
+        </select>
+        <input placeholder="Сроки начала" class="form-control my-2 mx-1" ng-model="project.dateStart">
+        <input placeholder="Сроки окончания" class="form-control my-2 mx-1" ng-model="project.dateEnd">
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-light px-3 py-2 ml-0 rounded" type="button" ng-click="cancel()">Отмена</button>
+        <button class="btn btn-primary px-3 py-2 ml-0 rounded" type="button" ng-click="addProject()">Создать</button>
+    </div>
+</div>

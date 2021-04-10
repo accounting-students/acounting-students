@@ -214,6 +214,15 @@ services.filter('orderObjectBy', function () {
     };
 });
 
+/*services.factory('mockData', function () {
+    var service = {};
+
+    service.UserData = [{
+        Id:1, UserName: "Test User"
+    }];
+
+    return service;
+}*/
 
 services.factory('userService', function ($location, $http, $uibModal, $sce, $q, $rootScope ) {
     var service = {};
@@ -221,37 +230,69 @@ services.factory('userService', function ($location, $http, $uibModal, $sce, $q,
     service.defaultError = "Сервер недоступен. Неизвестная ошибка сервера";
     service.User = null;
 
+    service.showUserProfile = function(){
+        var props = {
+            animation: true,
+            backdrop: 'static',
+            keyboard: false,
+            templateUrl: 'modalWindows/AuthorizationModal/autorization.html',
+            controller: 'AutorizationCtrl',
+        };
+
+        return $uibModal.open(props);
+    }
+
+    service.openAuthModal = function () {
+        var props = {
+            animation: true,
+            backdrop: 'static',
+            keyboard: false,
+            templateUrl: 'modalWindows/AuthorizationModal/autorization.html',
+            controller: 'AutorizationCtrl',
+        };
+
+        return $uibModal.open(props);
+    };
+
     service.resolveCheck = function(){
         var defered = $q.defer();
-        var token = service.getCookieByName("token");
-        if(token){ //if user exits then retry login
-            if(!service.User) {
-                service.getUserByToken(token).then(function (response) {
-                    if (response && response.user) {
-                        service.User = response.user;
-                        $rootScope.$broadcast('user:isActive', true);
-                        defered.resolve(true);
-                    } else {
-                        service.User = null;
-                        service.redirectTo("login");
-                        $rootScope.$broadcast('user:isActive', true);
-                        console.log(response.message);
-                        defered.resolve(true);
-                    }
-                }, function () {
-                    service.User = null;
-                    service.redirectTo("login");
-                    $rootScope.$broadcast('user:isActive', true);
-                    defered.resolve(false);
-                });
+        var user = JSON.parse(localStorage.getItem('User'));
+        console.log(user)
+        //var token = service.getCookieByName("token");
+        //if(token){ //if user exits then retry login
+            if(!user) {
+                service.User = user;
+                service.redirectTo("main");
+                $rootScope.$broadcast('user:isActive', false);
+                defered.resolve(false);
+                //service.getUserByToken(token).then(function (response) {
+                //    if (response && response.user) {
+                //        service.User = response.user;
+                //        $rootScope.$broadcast('user:isActive', true);
+                //        defered.resolve(true);
+                //    } else {
+                //        service.User = null;
+                //        service.redirectTo("login");
+                //        $rootScope.$broadcast('user:isActive', true);
+                //        console.log(response.message);
+                //        defered.resolve(true);
+                //    }
+                //}, function () {
+                //    service.User = null;
+                //    service.redirectTo("login");
+                //    $rootScope.$broadcast('user:isActive', true);
+                //    defered.resolve(false);
+                //});
             } else {
+                service.User = user;
+                $rootScope.$broadcast('user:isActive', true);
                 defered.resolve(true);
             }
-        } else {
-            service.redirectTo("login");
-            $rootScope.$broadcast('user:isActive', true);
-            defered.resolve(false);
-        }
+        //} else {
+        //    service.redirectTo("login");
+        //    $rootScope.$broadcast('user:isActive', true);
+        //    defered.resolve(false);
+        //}
         tryDigest();
 
         return defered.promise;
@@ -318,14 +359,26 @@ services.factory('userService', function ($location, $http, $uibModal, $sce, $q,
     };
 
     /************************************* USER API *************************************/
+    service.adminUserTypeId = 1;
+    service.studentUserTypeId = 2;
+    service.universityUserTypeId = 3;
+
     service.getAllUsers = function () {
-        var deferred = $q.defer();
-        $http.get(ipAdress + "/api/user/getAll").success(function (response) {
-            deferred.resolve(response);
-        }).error(function (error) {
-            deferred.reject(error);
-        });
-        return deferred.promise;
+
+        var users = [
+            {"login": "admin", "password": "admin", "firstName":"Федор", "lastName":"Михайлов", "userId":1, "userTypeId": service.adminUserTypeId},
+            {"login": "university", "password": "university", "firstName":"Универ", "lastName":"Универыч", "userId":2, "userTypeId": service.universityUserTypeId},
+            {"login": "student", "password": "student", "firstName":"Студент", "lastName":"Студентыч", "userId":3, "userTypeId": service.studentUserTypeId}
+            ];
+
+        return users;
+        //var deferred = $q.defer();
+        //$http.get(ipAdress + "/api/user/getAll").success(function (response) {
+        //    deferred.resolve(response);
+        //}).error(function (error) {
+        //    deferred.reject(error);
+        //});
+        //return deferred.promise;
     }
 
     service.addUser = function (user) {
@@ -361,11 +414,19 @@ services.factory('userService', function ($location, $http, $uibModal, $sce, $q,
 
     service.login = function (login, password) {
         var deferred = $q.defer();
-        $http.get(ipAdress + "/api/user/login?login="+login+"&password="+password).success(function (response) {
-            deferred.resolve(response);
-        }).error(function (error) {
-            deferred.reject(error);
+        var response = {};
+        var users = service.getAllUsers();
+        var user = null;
+        users.map(function (e) {
+            if(e.login == login) user = e;
         });
+        if(user && user.password == password) {
+            service.User = JSON.parse(JSON.stringify(user));
+            deferred.resolve(service.User);
+        } else {
+            response.message = "Неверно указан логин или пароль"
+            deferred.reject(response);
+        }
         return deferred.promise;
     };
 
@@ -436,9 +497,74 @@ myApp.factory('regionService', function ($http, $window, $q) {
     return service;
 });
 
-myApp.factory('projectService', function ($http, $window, $q) {
+myApp.factory('commonsService', function ($http, $window, $q) {
 
     var service = {};
+
+    service.companies = [
+        {companyName:"Companyname",direction:"direction1"},
+        {companyName:"CompanynameTest",direction:"direction1Test"},
+    ];
+
+    service.universities = [
+        {universityName:"test",universityId:1, specialties:["Разработчик","test2","test3"], free:21},
+        {universityName:"test1",universityId:2, specialties:["test3","Тестировщик","test3"], free:51},
+        {universityName:"test2",universityId:3, specialties:["test","test2","Аналитик"], free:15}
+    ];
+
+    service.studens = [
+        {name:"Вася Пупкин", specialty:"Разработчик", university:service.universities[0]},
+        {name:"Вася Пупкин 2", specialty:"Тестировщик", university:service.universities[1]},
+        {name:"Вася Пупкин 3", specialty:"Аналитик", university:service.universities[2]}
+    ];
+
+    service.projects = [
+        {projectStatus:"Принят", projectName:"test123", dateStart:"12.01.2020", dateEnd:"12.01.2022", universityName:"КГУ",universityId:1},
+        {projectStatus:"Принят", projectName:"test1", dateStart:"12.01.2020", dateEnd:"12.01.2021", universityName:"КГТУ",universityId:2},
+        {projectStatus:"Принят", projectName:"test12",dateStart:"12.01.2020", dateEnd:"12.01.2023",  universityName:"ЯрДемид",universityId:3}
+    ];
+
+    return service;
+});
+
+myApp.factory('companyService', function ($http, $window, $q, $uibModal) {
+
+    var service = {};
+
+    service.showCompanyModal = function(){
+        var modalInstance = $uibModal.open({
+            backdrop: 'static',
+            templateUrl: 'modalWindows/ShowCompanyModal/showCompanyModal.html',
+            controller: 'ShowCompanyCtrl',
+        });
+        return modalInstance.result;
+    }
+
+    return service;
+});
+
+
+myApp.factory('projectService', function ($http, $window, $q, $uibModal) {
+
+    var service = {};
+
+    service.createNewProject = function(){
+        var modalInstance = $uibModal.open({
+            backdrop: 'static',
+            templateUrl: 'modalWindows/CreateProjectModal/createProjectModal.html',
+            controller: 'CreateProjectCtrl',
+        });
+        return modalInstance.result;
+    }
+
+    service.showProjectModal = function(){
+        var modalInstance = $uibModal.open({
+            backdrop: 'static',
+            templateUrl: 'modalWindows/ShowProjectModal/showProjectModal.html',
+            controller: 'ShowProjectModalCtrl',
+        });
+        return modalInstance.result;
+    }
 
     service.getAllKanbanStatuses = function () {
         var deferred = $q.defer();
@@ -481,13 +607,14 @@ myApp.factory('projectService', function ($http, $window, $q) {
     };
 
     service.addProject = function (project) {
-        var deferred = $q.defer();
-        $http.post(ipAdress + "/api/project/addProject", project).success(function (response) {
-            deferred.resolve(response);
-        }).error(function (error) {
-            deferred.reject(error);
-        });
-        return deferred.promise;
+        commmons.projects.push(project)
+        //var deferred = $q.defer();
+        //$http.post(ipAdress + "/api/project/addProject", project).success(function (response) {
+        //    deferred.resolve(response);
+        //}).error(function (error) {
+        //    deferred.reject(error);
+        //});
+        //return deferred.promise;
     };
 
     service.getAllProjectClassificators = function () {

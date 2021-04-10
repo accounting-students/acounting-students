@@ -9,12 +9,13 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Система поддержки рационализаторских идей ПАО 'Россети'</title>
-    <meta name="description" content="Система поддержки рационализаторских идей ПАО 'Россети'">
-    <meta name="keywords" content="Система поддержки рационализаторских идей ПАО 'Россети' , хакатон, цифровой прорыв">
+    <title>СУП</title>
+    <meta name="description" content="СУП">
+    <meta name="keywords" content="СУП, система учета практикантов">
     <link rel="icon" type="image/x-icon" href="images/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css"/>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="bower_components/bootstrap/md.css" />
     <link rel="stylesheet" href="bower_components/angular-bootstrap/ui-bootstrap-csp.css">
@@ -34,26 +35,40 @@
 
 <body class="ng-cloak" id="page-top">
 <div id="wrapper" ng-controller="UserCtrl">
-    <nav class="navbar navbar-expand-lg fixed-top border-bottom" ng-cloak >
+    <nav class="navbar navbar-expand-lg bg-white fixed-top border-bottom" ng-cloak >
         <div class="container">
-            <a class="navbar-brand mb-0 h1" href="#/main">Сервис учёта практикантов</a>
+           <!-- <a class="navbar-brand mb-0 h1" target="_blank" href="my.mmtr.ru">Мой ММТР</a>/--><a ng-click="selectedPage='main'" class="text-dark bold navbar-brand mb-0 h1" href="#/main">Сервис учёта практикантов</a>
             <button id="Nav" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarContent"  >
 
                 <ul class="navbar-nav mr-auto" ng-if="isUserAuthorized()">
-                    <li class="nav-item ml-2"><a class="nav-link text-nowrap" href="#/projects"  ><i class="fab fa-buromobelexperte text-primary" style="margin-right: 15px;"></i>Проекты</a></li>
-                    <li class="nav-item ml-2"><a class="nav-link text-nowrap" href="#/universities"  ><i class="fa fa-university text-primary" style="margin-right: 15px;"></i>Вузы</a></li>
-                    <li class="nav-item ml-2"><a class="nav-link text-nowrap" href="#/users" ><i class="fa fa-user text-primary" style="margin-right: 15px;"></i>Студенты</a></li>
-                    <li class="nav-item ml-2"><a class="nav-link text-nowrap" href="#/kanban" ><i class="fa fa-clipboard text-primary" style="margin-right: 15px;"></i>Результаты проверки</a></li>
+                    <li ng-show="user.userTypeId == adminUserTypeId || user.userTypeId == universityUserTypeId" ng-click="selectedPage='projects'" class="nav-item ml-2">
+                        <a ng-class="{'active text-secondary': selectedPage == 'projects'}" class="nav-link text-nowrap" href="#/projects"><i class="fab fa-buromobelexperte " style="margin-right: 5px;"></i>Проекты</a>
+                    </li>
+                    <li ng-show="user.userTypeId == adminUserTypeId" ng-click="selectedPage='universities'" class="nav-item ml-2">
+                        <a ng-class="{'active text-secondary': selectedPage == 'universities'}"class="nav-link text-nowrap" href="#/universities"><i class="fa fa-university  " style="margin-right: 5px;"></i>Вузы</a>
+                    </li>
+                    <li ng-show="user.userTypeId == adminUserTypeId || user.userTypeId == universityUserTypeId" ng-click="selectedPage='students'" class="nav-item ml-2">
+                        <a ng-class="{'active text-secondary': selectedPage == 'students'}"class="nav-link text-nowrap" href="#/students"><i class="fa fa-user  " style="margin-right: 5px;"></i>Студенты</a>
+                    </li>
+                    <li ng-show="user.userTypeId == universityUserTypeId || user.userTypeId == studentUserTypeId" ng-click="selectedPage='companies'" class="nav-item ml-2">
+                        <a ng-class="{'active text-secondary': selectedPage == 'companies'}"class="nav-link text-nowrap" href="#/companies"><i class="fa fa-user  " style="margin-right: 5px;"></i>IT-компании</a>
+                    </li>
+                    <li ng-show="user.userTypeId == studentUserTypeId" ng-click="selectedPage='profile'" class="nav-item ml-2">
+                        <a ng-class="{'active text-secondary': selectedPage == 'profile'}"class="nav-link text-nowrap" href="#/profile"><i class="fa fa-user  " style="margin-right: 5px;"></i>Профиль</a>
+                    </li>
+                    <li ng-show="user.userTypeId == adminUserTypeId || user.userTypeId == universityUserTypeId " ng-click="selectedPage='results'" class="nav-item ml-2">
+                        <a ng-class="{'active text-secondary': selectedPage == 'results'}"class="nav-link text-nowrap" href="#/results" ><i class="fa fa-clipboard  " style="margin-right: 5px;"></i>Аттестация студентов</a>
+                    </li>
 
                 </ul>
                 <ul  class="navbar-nav ml-auto" ng-if="isUserAuthorized()">
-                    <li class="nav-item ml-2  " ><a class="nav-link text-nowrap" href="" ng-click="logOut()" ><i class="fas fa-power-off text-primary" style="margin-right: 15px;"></i>Выйти</a></li>
+                    <li class="nav-item ml-2  " ><a class="nav-link text-nowrap" href="" ng-click="logOut()" ><i class="fas fa-power-off  " style="margin-right: 5px;"></i>Выйти</a></li>
                 </ul>
                 <ul  class="navbar-nav ml-auto" ng-if="!isUserAuthorized()">
-                    <li class="nav-item ml-2 " ><a class="nav-link text-nowrap" href="" ng-click="logIn()" ><i class="fas fa-power-off text-primary" style="margin-right: 15px;"></i>Войти</a></li>
+                    <li class="nav-item ml-2 " ><a class="nav-link text-nowrap" href="" ng-click="logIn()" ><i class="fas fa-power-off  " style="margin-right: 5px;"></i>Войти</a></li>
                 </ul>
             </div>
         </div>
@@ -81,25 +96,25 @@
 
 <!--Application Angular JS files-->
 <script src="app.js?1.3"></script>
-<script src="loginPage/loginPage.js?1.3"></script>
 <script src="mainPage/mainPage.js?1.3"></script>
 <script src="services.js?1.3"></script>
-<script src="users/users.js?1.3"></script>
-<script src="profile/profile.js?1.3"></script>
+<script src="userProfile/userProfile.js"></script>
 <script src="chat/chat.js?1.4"></script>
-<script src="kanban/kanban.js?1.3"></script>
-<script src="settings/settings.js?1.3"></script>
-<script src="mySuggestion/mySuggestion.js?1.3"></script>
-<script src="project/project.js?1.3"></script>
-<script src="createProject/createProject.js?1.3"></script>
-<script src="statistic/statistic.js?1.3"></script>
+<script src="projects/projects.js?1.3"></script>
+<script src="universities/universities.js?1.3"></script>
+<script src="students/students.js?1.3"></script>
+<script src="companies/companies.js"></script>
+<script src="studentAttestation/studentAttestation.js"></script>
 
 <!--modal windows-->
 <script src="modalWindows/ConfirmationModal/confirmationModal.js?1.3"></script>
 <script src="modalWindows/InfoModal/infoModal.js?1.3"></script>
 <script src="modalWindows/AddUserModal/addUserModal.js?1.3"></script>
 <script src="modalWindows/EditUserModal/editUserModal.js?1.3"></script>
-
+<script src="modalWindows/AuthorizationModal/autorization.js?1.3"></script>
+<script src="modalWindows/CreateProjectModal/createProjectModal.js"></script>
+<script src="modalWindows/ShowProjectModal/showProjectModal.js"></script>
+<script src="modalWindows/ShowCompanyModal/showCompanyModal.js"></script>
 </body>
 
 </html>

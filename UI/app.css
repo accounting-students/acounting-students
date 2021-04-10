@@ -10,8 +10,16 @@
     margin-right: 7px !important;
 }
 body {
-    padding-top: 6.5rem;
+    padding-top: 4rem;
     font-size: 15px;
+}
+.modal-content{
+    -webkit-border-radius: 12px !important;
+    -moz-border-radius: 12px !important;
+    border-radius: 12px !important;
+}
+.modal-footer, .modal-header{
+    border: unset !important;
 }
 .navbarStyle{
     color: #ffffff !important;
@@ -19,7 +27,7 @@ body {
     padding-top: 12px !important;
 }
 .btn-primary, .modal-content .btn-info {
-    background: linear-gradient(93deg, #7cb8f7, #2a8bf2);
+    background-color: #7749f8 !important;
 }
 .justify-content-space-evenly{
     justify-content: space-evenly;

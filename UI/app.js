@@ -11,9 +11,10 @@ function setIpAddress() {
     if (serverUrlIndex == 1) ipAdress = "http://127.0.0.1:8081";
 };
 
-var myApp = angular.module('myApp', ['ngRoute', 'ui.bootstrap', 'ui.select', 'myApp.services', 'myApp.confirmationModal','myApp.loginPage',
-        'myApp.infoModal',  'myApp.mainPage', 'myApp.users', 'myApp.addUserModalModal', 'myApp.editUserModalModal', 'myApp.profile', 'myApp.settings',
-        'myApp.chat', 'myApp.kanban', 'myApp.mySuggestion', 'myApp.createProject', 'myApp.project', 'myApp.statistic']);
+var myApp = angular.module('myApp', ['ngRoute', 'ui.bootstrap', 'ui.select', 'myApp.services', 'myApp.confirmationModal',
+    'myApp.infoModal',  'myApp.mainPage', 'myApp.userProfile', 'myApp.addUserModalModal', 'myApp.editUserModalModal',  'myApp.project',
+    'myApp.AutorizationModal', 'myApp.createProject', 'myApp.showProject', 'myApp.universities', 'myApp.students', 'myApp.userProfile', 'myApp.companies',
+    'myApp.showCompany', 'myApp.studentAttestation']);
 
 
 myApp.config(function ($httpProvider) {
@@ -27,7 +28,7 @@ myApp.factory('authInterceptor', function ($rootScope, $q) {
     service.request = function (config) {
         config.headers = config.headers || {};
         //валидация пользователя (проверка авторизации) по хэдеру Authorization
-        if(getCookieByName("token") != undefined) config.headers.Authorization = getCookieByName("token");
+        //if(getCookieByName("token") != undefined) config.headers.Authorization = getCookieByName("token");
         return config;
     };
 
@@ -47,7 +48,7 @@ myApp.config(function ($routeProvider) {
     var UserResolve = {
         authorizeCheck: function(userService) {
             //валидация пользователя (проверка авторизации)
-            //return userService.resolveCheck();
+            return userService.resolveCheck();
         }
     };
 
@@ -60,39 +61,35 @@ myApp.config(function ($routeProvider) {
         })
         .when('/main', {
             templateUrl: 'mainPage/mainPage.html',
-            controller: 'MainPageCtrl'
+            controller: 'MainPageCtrl',
+            resolve: UserResolve
         })
         .when('/notFound404', {
             templateUrl: 'notFound404/404.html',
         })
-        .when('/mySuggestion', {
-            templateUrl: 'mySuggestion/mySuggestion.html',
-            controller: 'MySuggestionCtrl'
+        .when('/projects', {
+            templateUrl: 'projects/projects.html',
+            controller: 'ProjectCtrl',
+            resolve: UserResolve
         })
         .when('/chat', {
             templateUrl: 'chat/chat.html',
-            controller: 'ChatCtrl'
+            controller: 'ChatCtrl',
+            resolve: UserResolve
         })
         .when('/createProject', {
             templateUrl: 'createProject/createProject.html',
-            controller: 'CreateProjectCtrl'
-        })
-        .when('/statistic', {
-            templateUrl: 'statistic/statistic.html',
-            controller: 'StatisticCtrl'
-        })
-        .when('/project', {
-            templateUrl: 'project/project.html',
-            controller: 'ProjectCtrl'
-        })
-        .when('/settings', {
-            templateUrl: 'settings/settings.html',
-            controller: 'SettingsCtrl',
+            controller: 'CreateProjectCtrl',
             resolve: UserResolve
         })
-        .when('/kanban', {
-            templateUrl: 'kanban/kanban.html',
-            controller: 'KanbanCtrl',
+        .when('/universities', {
+            templateUrl: 'universities/universities.html',
+            controller: 'UniversitiesCtrl',
+            resolve: UserResolve
+        })
+        .when('/students', {
+            templateUrl: 'students/students.html',
+            controller: 'StudentsCtrl',
             resolve: UserResolve
         })
         .when('/users', {
@@ -100,16 +97,21 @@ myApp.config(function ($routeProvider) {
             controller: 'UsersCtrl',
             resolve: UserResolve
         })
-        .when('/login', {
-            templateUrl: 'loginPage/loginPage.html',
-            controller: 'LoginCtrl',
-        })
         .when('/profile', {
-            templateUrl: 'profile/profile.html',
-            controller: 'ProfileCtrl',
+            templateUrl: 'userProfile/userProfile.html',
+            controller: 'UserProfileCtrl',
             resolve: UserResolve
         })
-
+        .when('/companies', {
+            templateUrl: 'companies/companies.html',
+            controller: 'CompaniesCtrl',
+            resolve: UserResolve
+        })
+        .when('/results', {
+            templateUrl: 'studentAttestation/studentAttestation.html',
+            controller: 'CompaniesCtrl',
+            resolve: UserResolve
+        })
 });
 
 myApp.controller('CopyrightDateCtrl', function ($scope, dateFilter) {
@@ -121,16 +123,21 @@ myApp.controller('CopyrightDateCtrl', function ($scope, dateFilter) {
 });
 
 myApp.controller('UserCtrl', function ($scope, $rootScope, userService) { //это контроллер , он ставится в шаблоне html ng-controller="UserCtrl" - и отвечает за видимость внутри вложенных dom элементов старницы
-    $scope.isToggled = true;
 
-    if(userService.User){
-        $scope.user = userService.User;
-    }
+    $scope.adminUserTypeId = userService.adminUserTypeId;
+    $scope.studentUserTypeId = userService.studentUserTypeId;
+    $scope.universityUserTypeId = userService.universityUserTypeId;
+
+    $scope.isToggled = true;
+    $scope.selectedPage = null;
+    $scope.user = userService.User;
 
     tryDigest();
     $scope.$on('user:isActive', function() {
         if(userService.User){
             $scope.user = userService.User;
+            $scope.isAuthorized = true;
+            console.log($scope.user)
         }
         tryDigest();
     });
@@ -151,15 +158,26 @@ myApp.controller('UserCtrl', function ($scope, $rootScope, userService) { //эт
         $('.dropdown-menu').slideUp(0);
     }
     $scope.logOut = function(){
-        $scope.isAuthorized = !$scope.isAuthorized;
+        $scope.selectedPage = null;
+        $scope.isAuthorized = false;
+        delete localStorage.User;
         //userService.deleteTokenFromCookie();
-        //$scope.user = $rootScope.user = null;
-        //userService.redirectTo("login")
-        //tryDigest();
+         $scope.user = $rootScope.user = null;
+         userService.redirectTo("main")
+         tryDigest();
     };
 
     $scope.logIn = function(){
-        $scope.isAuthorized = !$scope.isAuthorized;
+
+        var modalInstance = userService.openAuthModal();
+        modalInstance.result.then(function (response) {
+            if(userService.User) {
+                $scope.user = userService.User;
+                $scope.isAuthorized = true;
+            }
+
+        }, function () {});
+
     }
 
     $scope.setSelectedTabInTab = function (value) {

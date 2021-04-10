@@ -1,0 +1,14 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h4 class="modal-title text-dark">Авторизация</h4>
+        <button type="button" class="close btn-sm" ng-click="close()"><i class="fas fa-times small"></i> </button>
+    </div>
+    <div class="modal-body">
+        <input placeholder="Логин" class="form-control my-2 mx-1" ng-model="login">
+        <input placeholder="Пароль" type="password" class="form-control my-2 mx-1" ng-model="password">
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-light px-3 py-2 ml-0 rounded" type="button" ng-click="cancel()">Отмена</button>
+        <button class="btn btn-primary px-3 py-2 ml-0 rounded" type="button" ng-click="auth()">Войти</button>
+    </div>
+</div>

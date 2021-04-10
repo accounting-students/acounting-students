@@ -1,0 +1,54 @@
+<div class="container p-3" ng-show="!user && loaded">
+    <div>Недостаточно учетных данных <a href="#/main">На главную</a> </div>
+</div>
+<div ng-show="user" class="container" style="margin-top: 50px;">
+    <div class="row mt-2" style="margin-bottom: 20px;">
+        <div class="col-6">
+            <div class="d-inline-block">
+                <h1 class="text-dark" style="font-family: Montserrat, sans-serif;">Вузы</h1>
+
+            </div>
+        </div>
+        <div class="col-6" >
+            <div class="text-right">
+                <button  ng-if="isAdmin" class="btn btn-primary px-3 py-2 ml-0 rounded" ng-click="" type="submit">
+                    <i class="fas fa-plus" style="margin-right: 9px;"></i>Добавить нового студента</button>
+                <button class="btn text-dark px-3 py-2 ml-0"><i class="fas fa-filter"></i></button>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="height: 92%;">
+        <div class="col-12" style="margin-right: 24px;">
+            <div class="card mb-2">
+                <div class="card-body" style="padding: 0px;">
+                    <div class="table-responsive" ng-if="universities && universities.length>0">
+                        <table class="table">
+                            <thead>
+                            <tr style="height: 65px;">
+                                <th class="text-dark pointer" width="50">№</th>
+                                <th class="text-dark pointer"  ng-click="reverse2=!reverse2; order(reverse2, 'universityName')">ВУЗ</th>
+                                <th class="text-dark pointer" >Специальности</th>
+                                <th class="text-dark pointer"  ng-click="reverse3=!reverse5; order(reverse5, 'free')">Свободных</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="university in universities |orderObjectBy:sortType:reverse">
+                                <td>{{$index+1}}</td>
+                                <td>
+                                    {{university.universityName}}
+                                </td>
+                                <td>
+                                    {{university.specialties.join(",")}}
+                                </td>
+                                <td>
+                                    {{university.free}}
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

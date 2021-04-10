@@ -1,8 +1,8 @@
 'use strict';
 
-var mainPage = angular.module('myApp.mainPage', ['ngRoute']);
+var UserProfileCtrl = angular.module('myApp.userProfile', ['ngRoute']);
 
-mainPage.controller('MainPageCtrl', function ($scope, userService, infoService ,  $rootScope, projectService, likeService) {
+UserProfileCtrl.controller('UserProfileCtrl', function ($scope, userService, infoService , $rootScope, projectService, commonsService) {
 
     var userInt = setInterval(function(){
         if(userService.User) {
@@ -19,8 +19,16 @@ mainPage.controller('MainPageCtrl', function ($scope, userService, infoService ,
             $rootScope.$apply();
         }
     }
-
-    $scope.project = [];
+    getAllProjects();
+    function getAllProjects(){
+        $scope.projects = commonsService.projects;
+        tryDigest();
+    }
+    function tryDigest() {
+        if (!$scope.$$phase) {
+            $scope.$apply();
+        }
+    }
 
     $scope.createProject = function(){
         projectService.projectStatusId = 1;
@@ -33,6 +41,12 @@ mainPage.controller('MainPageCtrl', function ($scope, userService, infoService ,
             userService.redirectTo("project");
         } else
             infoService.infoFunction("Невозможно открыть проект: нет id проекта", "Ошибка");
+    }
+    $scope.showProjectModal = function(){
+        var modalInstance = projectService.showProjectModal();
+        modalInstance.result.then(function (response) {
+
+        }, function () {});
     }
 
 });

@@ -1,0 +1,56 @@
+<div class="container p-3" ng-show="!user && loaded">
+    <div>Недостаточно учетных данных <a href="#/main">На главную</a> </div>
+</div>
+<div ng-show="user" class="container" style="margin-top: 50px;">
+    <div class="row mt-2" style="margin-bottom: 20px;">
+        <div class="col-6">
+            <div class="d-inline-block">
+                <h1 class="text-dark" style="font-family: Montserrat, sans-serif;">Студенты</h1>
+
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="text-right">
+                <button ng-if="isAdmin" class="btn btn-primary px-3 py-2 ml-0 rounded" ng-click="" type="submit"><i class="fas fa-plus" style="margin-right: 9px;"></i>Добавить нового студента</button>
+                <button class="btn text-dark px-3 py-2 ml-0"><i class="fas fa-filter"></i></button>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="height: 92%;">
+        <div class="col-12" style="margin-right: 24px;">
+            <div class="card mb-2">
+                <div class="card-body" style="padding: 0px;">
+                    <div class="table-responsive" ng-if="students && students.length>0">
+                        <table class="table">
+                            <thead>
+                            <tr style="height: 65px;">
+                                <th class="text-dark pointer" width="50">№</th>
+                                <th class="text-dark pointer">ФИО</th>
+                                <th class="text-dark pointer">ВУЗ</th>
+                                <th class="text-dark pointer">Специальность</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="student in students | orderObjectBy:sortType:reverse">
+                                <td>{{$index+1}}</td>
+                                <td>
+                                    {{student.name}}
+                                </td>
+                                <td>
+                                    {{student.university.universityName}}
+                                </td>
+                                <td>
+                                    {{student.specialty}}
+                                </td>
+                                <td>
+                                    <a ng-href="{{'#/profile?studentId=' + student.studentId}}" class="href-style px-3 py-2 ml-0 rounded">Профиль</a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
