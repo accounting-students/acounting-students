@@ -76,6 +76,17 @@ router.get(
          .catch((e) => handleDefault(e, response));
    }));
 
+router.get(
+   '/get_all_projects',
+   (request, response) => 
+      request.pool
+         .query("SELECT * FROM projects;")
+         .then(db.getAll)
+         .then((result) => response.json({ projects: result }))
+         .catch((e) => handleDefault(e, response))
+);
+
+
 // /api/user/getAll
 router.get(
    '/getAll',

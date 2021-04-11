@@ -3,7 +3,7 @@ const {Pool} = require('pg');
 const multer = require('multer');
 import {getFromConfig, handleDefault, db} from './utils';
 
-const hostname = process.env.IP_ADDRESS || 'localhost';
+const hostname = process.env.IP_ADDRESS || '139.59.138.255';
 const port = 8081;
 const app = express();
 const savePool = (req, res, next) => {
@@ -34,7 +34,7 @@ const connectToDataBase = () => {
 }
 
 const ALLOWED_ORIGINS = [
-  'http://168.63.58.52:80',
+  'http://139.59.138.255:80',
   'http://localhost:63342',
   'http://localhost:80',
   //'http://localhost:8081',
@@ -70,7 +70,7 @@ app.use(function (req, res, next) {
 
 app.use(express.json({ extended: true }));
 app.use(savePool);
-app.use('/api/user/', require('./routes/user.routes'));
+app.use('/api/', require('./routes/user.routes'));
 app.use('/api/user_roles/', require('./routes/user_roles.routes'));
 app.use('/api/region/', require('./routes/region.routes'));
 app.use('/api/kanban/', require('./routes/kanban.routes'));
