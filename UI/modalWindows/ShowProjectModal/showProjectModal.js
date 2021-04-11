@@ -39,6 +39,7 @@ ShowProjectModalCtrl.controller('ShowProjectModalCtrl', function ($scope, $uibMo
         students.push({name:student , role:role});
         $scope.isAddStudent = false;
     }
+
     $scope.rejectAddStudentToProject = function(){
         $scope.isAddStudent = false;
     }
