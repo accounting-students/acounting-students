@@ -28,7 +28,7 @@ users.controller('UsersCtrl', function ($scope, userService, infoService, projec
                 infoService.infoFunction(response.message ? response.message : userService.defaultError, "Ошибка");
             }
         }, function (response) {
-            console.log(response)
+            //console.log(response)
             infoService.infoFunction(response.message ? response.message : userService.defaultError, "Ошибка");
         });
     }
@@ -47,7 +47,7 @@ users.controller('UsersCtrl', function ($scope, userService, infoService, projec
                 infoService.infoFunction(response.message, "Ошибка")
             }
         }, function(error) {
-            console.error(error);
+            //console.error(error);
         });
     }
 

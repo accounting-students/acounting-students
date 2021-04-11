@@ -246,7 +246,7 @@ services.factory('userService', function ($location, $http, $uibModal, $sce, $q,
     service.resolveCheck = function(){
         var defered = $q.defer();
         var user = JSON.parse(localStorage.getItem('User'));
-        console.log(user)
+        //console.log(user)
         //var token = service.getCookieByName("token");
         //if(token){ //if user exits then retry login
             if(!user) {
@@ -352,6 +352,7 @@ services.factory('userService', function ($location, $http, $uibModal, $sce, $q,
     service.studentUserTypeId = 2;
     service.universityUserTypeId = 3;
 
+    /*MOCK DATA FOR TEST*/
     service.users = [
         {competenceList:[{"competenceName":"Pk1 - test 234","isCheckedCompany":true,"isCheckedUniversity":true,"mentorCompany":"Иванов","mentorUniversity":"Петров"},{"competenceName":"Pk2 - test 2123aedqw4","isCheckedCompany":true,"isCheckedUniversity":true,"mentorCompany":"Иванов","mentorUniversity":"Петров"}], github:"qwe234",telegram:"qwe234",gitlab:"qwe234",skype:"asd11da23asd",universityName:"КГУ",email:"4test@test123", "phone":"1111123", patronymic:"Ммтрович", address:"Кострома, ул.Советская д.120", mainSpecialty:"Разработчик", "login": "admin", "password": "admin", "firstName":"Федор", "lastName":"Михайлов", "userId":1, "userTypeId": service.adminUserTypeId},
         {competenceList:[{"competenceName":"Pk1 - test 234","isCheckedCompany":true,"isCheckedUniversity":true,"mentorCompany":"Иванов","mentorUniversity":"Петров"},{"competenceName":"Pk2 - test 2123aedqw4","isCheckedCompany":true,"isCheckedUniversity":true,"mentorCompany":"Иванов","mentorUniversity":"Петров"}], github:"eqwea",telegram:"qweqweqwe",gitlab:"q12312we234",skype:"qwe234",universityName:"КГТУ",email:"5test@test123", "phone":"125553", patronymic:"Ммтрович", address:"Кострома, ул.Советская д.120", mainSpecialty:"Тестировщик", "login": "university", "password": "university", "firstName":"Универ", "lastName":"Универыч", "userId":2, "userTypeId": service.universityUserTypeId},
@@ -378,7 +379,7 @@ services.factory('userService', function ($location, $http, $uibModal, $sce, $q,
     service.getAllUsers = function () {
          var deferred = $q.defer();
          $http.get(ipAdress + "/api/get_all_users").success(function (response) {
-             console.log(response)
+             //console.log(response)
              if(response.users) service.users = response.users;
              response.users.map(function (e) {
                  service.getUserCompetence(e.userId).then(function (comp) {
@@ -534,15 +535,12 @@ myApp.factory('commonsService', function ($http, $window, $q) {
 
     service.roles = [{"roleName":"Разработчик"}, {"roleName":"Тестировщик"}]
 
-    service.companies = [
-        {hrPhone:"+7912331122", description:bigText, dateStart:"12.01.2020", dateEnd:"12.01.2022", companyName:"ММТР Технологии", direction:"direction1"},
-        {hrPhone:"+7932134566", description:bigText, dateStart:"12.01.2020", dateEnd:"12.01.2022", companyName:"Наймикс", direction:"direction1Test"},
-    ];
+
 
     service.universities = [
-        {universityName:"test",universityId:1, specialties:["Разработчик","test2","test3"], free:21},
-        {universityName:"test1",universityId:2, specialties:["test3","Тестировщик","test3"], free:51},
-        {universityName:"test2",universityId:3, specialties:["test","test2","Аналитик"], free:15}
+        {universityName:"test",universityId:1, specialities:["Разработчик","test2","test3"], free:21},
+        {universityName:"test1",universityId:2, specialities:["test3","Тестировщик","test3"], free:51},
+        {universityName:"test2",universityId:3, specialities:["test","test2","Аналитик"], free:15}
     ];
 
     service.studensForEstimate = [
@@ -552,9 +550,9 @@ myApp.factory('commonsService', function ($http, $window, $q) {
     ];
 
     service.projects = [
-        {students:[{name:"Вася Петин", role:"Разработчик"}, {name:"Людвиг IX", role:"Разработчик"}, {name:"Стас Михайлов", role:"Разработчик"}], description:bigText, statusClass:"badge-success", projectStatus:"Принят", projectName:"Сделай то", dateStart:"12.01.2020", dateEnd:"12.01.2022", universityName:"КГУ",universityId:1},
-        {students:[{name:"Вася Петин", role:"Разработчик"}, {name:"Людвиг IX", role:"Тестировщик"}, {name:"Стас Михайлов", role:"Тестировщик"}], description:bigText, statusClass:"badge-secondary", projectStatus:"На рассмотрении", projectName:"Сделай это", dateStart:"12.01.2020", dateEnd:"12.01.2021", universityName:"КГТУ",universityId:2},
-        {students:[{name:"Вася Петин", role:"Аналитик"}, {name:"Людвиг IX", role:"Разработчик"}, {name:"Стас Михайлов", role:"Тестировщик"}], description:bigText, statusClass:"badge-danger", projectStatus:"Отклонён", projectName:"И вот это",dateStart:"12.01.2020", dateEnd:"12.01.2023",  universityName:"ЯрДемид",universityId:3}
+        {projectId:1, students:[{name:"Вася Петин", role:"Разработчик"}, {name:"Людвиг IX", role:"Разработчик"}, {name:"Стас Михайлов", role:"Разработчик"}], description:bigText, statusClass:"badge-success", projectStatus:"Принят", projectName:"Сделай то", dateStart:"12.01.2020", dateEnd:"12.01.2022", universityName:"КГУ",universityId:1},
+        {projectId:2, students:[{name:"Вася Петин", role:"Разработчик"}, {name:"Людвиг IX", role:"Тестировщик"}, {name:"Стас Михайлов", role:"Тестировщик"}], description:bigText, statusClass:"badge-secondary", projectStatus:"На рассмотрении", projectName:"Сделай это", dateStart:"12.01.2020", dateEnd:"12.01.2021", universityName:"КГТУ",universityId:2},
+        {projectId:3, students:[{name:"Вася Петин", role:"Аналитик"}, {name:"Людвиг IX", role:"Разработчик"}, {name:"Стас Михайлов", role:"Тестировщик"}], description:bigText, statusClass:"badge-danger", projectStatus:"Отклонён", projectName:"И вот это",dateStart:"12.01.2020", dateEnd:"12.01.2023",  universityName:"ЯрДемид",universityId:3}
     ];
 
     return service;
@@ -578,6 +576,24 @@ myApp.factory('companyService', function ($http, $window, $q, $uibModal) {
         return modalInstance.result;
     }
 
+    service.companies = [
+        {id:1, hrPhone:"+7912331122", description:bigText, dateStart:"12.01.2020", dateEnd:"12.01.2022", companyName:"ММТР Технологии", direction:"direction1"},
+        {id:2, hrPhone:"+7932134566", description:bigText, dateStart:"12.01.2020", dateEnd:"12.01.2022", companyName:"Наймикс", direction:"direction1Test"},
+    ];
+
+    service.getAllCompanies = function () {
+        var deferred = $q.defer();
+        $http.get(ipAdress + "/api/get_all_companies").success(function (response) {
+            //console.log(response)
+            if(response.companies) service.companies = response.companies;
+            deferred.resolve(response.companies);
+        }).error(function () {
+            deferred.resolve(service.companies);
+        });
+        return deferred.promise;
+    }
+
+
     return service;
 });
 
@@ -585,6 +601,22 @@ myApp.factory('companyService', function ($http, $window, $q, $uibModal) {
 myApp.factory('projectService', function ($http, $window, $q, $uibModal, commonsService) {
 
     var service = {};
+
+    service.addStudentToProject = function(student){
+        var modalInstance = $uibModal.open({
+            backdrop: 'static',
+            templateUrl: 'modalWindows/AddStudentToProjectModal/addStudentToProject.html',
+            controller: 'addStudentToProjectCtrl',
+            resolve: {
+                student: function () {
+                    return student;
+                }
+            }
+        });
+        return modalInstance;
+    }
+
+
 
     service.createNewProject = function(){
         var modalInstance = $uibModal.open({
@@ -609,9 +641,39 @@ myApp.factory('projectService', function ($http, $window, $q, $uibModal, commons
         return modalInstance.result;
     }
 
-    service.getAllKanbanStatuses = function () {
+    service.getAllUniversity = function () {
         var deferred = $q.defer();
-        $http.get(ipAdress + "/api/kanban/getAll" ).success(function (response) {
+        $http.get(ipAdress + "/api/get_all_university").success(function (response) {
+            deferred.resolve(response);
+        }).error(function (error) {
+            deferred.reject(error);
+        });
+        return deferred.promise;
+    };
+
+    service.getProjectStudents = function (projectId) {
+        var deferred = $q.defer();
+        $http.get(ipAdress + "/api/get_project_students?projectID="+projectId).success(function (response) {
+            deferred.resolve(response);
+        }).error(function (error) {
+            deferred.reject(error);
+        });
+        return deferred.promise;
+    };
+
+    service.addStudentRequest = function (studentId, companyId) {
+        var deferred = $q.defer();
+        $http.get(ipAdress + "/api/add_student_request?studentID="+studentId+"&companyID="+companyId).success(function (response) {
+            deferred.resolve(response);
+        }).error(function (error) {
+            deferred.reject(error);
+        });
+        return deferred.promise;
+    };
+
+    service.addStudentToProjectRequest = function (studentId, projectId, roleName) {
+        var deferred = $q.defer();
+        $http.get(ipAdress + "/api/add_student_on_project?studentID="+studentId+"&projectID="+projectId+"&studentRole="+roleName ).success(function (response) {
             deferred.resolve(response);
         }).error(function (error) {
             deferred.reject(error);

@@ -23,7 +23,10 @@ CompaniesCtrl.controller('CompaniesCtrl', function ($scope, commonsService, user
     }
 
     function getCompanies(){
-        $scope.companies = commonsService.companies;
+        companyService.getAllCompanies().then(function(companies){
+            $scope.companies =companies;
+        })
+
     }
 
     $scope.showCompanyModal = function(company){

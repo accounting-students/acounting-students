@@ -2,7 +2,8 @@
 
 var universities = angular.module('myApp.universities', ['ngRoute']);
 
-universities.controller('UniversitiesCtrl', function ($scope, commonsService, userService) {
+universities.controller('UniversitiesCtrl', function ($scope, commonsService, userService, projectService
+) {
 
 
     var userInt = setInterval(function(){
@@ -29,7 +30,12 @@ universities.controller('UniversitiesCtrl', function ($scope, commonsService, us
     }
 
     function getUniversities() {
-        $scope.universities = commonsService.universities;
+        projectService.getAllUniversity().then(function (universities) {
+            $scope.universities = universities.university;
+        },function () {
+            $scope.universities = commonsService.universities;
+        })
+
     }
 
 

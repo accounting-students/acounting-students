@@ -1,7 +1,7 @@
 
 var ShowProjectModalCtrl = angular.module('myApp.showProject', ['ngRoute', 'ui.bootstrap']);
 
-ShowProjectModalCtrl.controller('ShowProjectModalCtrl', function ($scope, $uibModalInstance, project, userService, commonsService) {
+ShowProjectModalCtrl.controller('ShowProjectModalCtrl', function ($scope, $uibModalInstance, project, userService, commonsService, projectService) {
 
 
     var userInt = setInterval(function(){
@@ -34,6 +34,14 @@ ShowProjectModalCtrl.controller('ShowProjectModalCtrl', function ($scope, $uibMo
 
     $scope.universityUserTypeId = userService.universityUserTypeId;
     $scope.project = project;
+
+    getProjectStudents();
+
+    function getProjectStudents(){
+        projectService.getProjectStudents($scope.project.projectId).then(function (students) {
+            $scope.project.students = students.projectStudents
+        });
+    }
 
     $scope.addStudentToProject = function(students, role, student){
         students.push({name:student , role:role});

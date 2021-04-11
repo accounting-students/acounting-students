@@ -2,7 +2,7 @@
 
 var StudentsCtrl = angular.module('myApp.students', ['ngRoute']);
 
-StudentsCtrl.controller('StudentsCtrl', function ($scope, commonsService, userService) {
+StudentsCtrl.controller('StudentsCtrl', function ($scope, commonsService, userService, projectService) {
 
 
     var userInt = setInterval(function(){
@@ -14,6 +14,16 @@ StudentsCtrl.controller('StudentsCtrl', function ($scope, commonsService, userSe
             tryDigest();
         }
     },300)
+
+    $scope.addStudentToProject = function(student){
+        var modalInstance = projectService.addStudentToProject(student);
+        modalInstance.result.then(function () {
+            getStudents();
+        }, function () {
+            getStudents();
+        });
+
+    }
 
     function tryDigest() {
         if (!$scope.$$phase) {

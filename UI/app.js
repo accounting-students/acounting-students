@@ -14,7 +14,7 @@ function setIpAddress() {
 var myApp = angular.module('myApp', ['ngRoute', 'ui.bootstrap', 'ui.select', 'myApp.services', 'myApp.confirmationModal',
     'myApp.infoModal',  'myApp.mainPage', 'myApp.userProfile', 'myApp.addUserModalModal', 'myApp.editUserModalModal',  'myApp.project',
     'myApp.AutorizationModal', 'myApp.createProject', 'myApp.showProject', 'myApp.universities', 'myApp.students', 'myApp.userProfile', 'myApp.companies',
-    'myApp.showCompany', 'myApp.studentAttestation' ]);
+    'myApp.showCompany', 'myApp.studentAttestation', 'myApp.addStudentToProject']);
 
 
 myApp.config(function ($httpProvider) {
@@ -137,7 +137,7 @@ myApp.controller('UserCtrl', function ($scope, $rootScope, userService) { //эт
         if(userService.User){
             $scope.user = userService.User;
             $scope.isAuthorized = true;
-            console.log($scope.user)
+            //console.log($scope.user)
         }
         tryDigest();
     });

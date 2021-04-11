@@ -1,0 +1,39 @@
+<div class="modal-content" style="border-radius: 10px; width: 650px !important;">
+    <div class="modal-header">
+        <h5 class="modal-title text-dark bold" id="staticBackdropLabel">Рассмотрение заявки студента</h5>
+        <button type="button" class="close btn-sm" ng-click="close()"><i class="fas fa-times small"></i> </button>
+    </div>
+    <div class="modal-body modal-body-full-height" style="width: 650px !important;">
+        <div class="row">
+            <div class="col d-flex flex-column">
+                <div class="row" style="margin-bottom: 10px">
+                    <div class="col">
+                        <span class="text-dark bold"> Студент</span><h6 style="color: rgb(97, 97, 97); margin-bottom: 15px ">{{student.lastName + ' ' +student.firstName}}</h6>
+                        <span class="text-dark bold">   Основная специальность </span><h6 style="margin-bottom: 25px; color: rgb(97, 97, 97)">{{student.mainSpecialty?student.mainSpecialty:'Не указано'}}</h6>
+                        <span class="text-dark bold">  Адрес проживания </span><h6 style="margin-bottom: 25px; color: rgb(97, 97, 97)">{{student.address}}</h6>
+                    </div>
+
+                </div>
+                <div class="row">
+                      <span class="col text-dark bold">Добавить студента на проект</span>
+                    <div class="col-12">
+                        <select  ng-class="{'ng-invalids':isError && !project}" placeholder="Выберите проект" class="form-control my-2  " ng-model="project">
+                            <option ng-repeat="project in projects"
+                                    value="{{project.projectId}}">
+                                {{project.projectName}}
+                            </option>
+                        </select>
+                    </div>
+                    <span class="col text-dark bold">Роль студента на проекте</span>
+                    <div class="col-12">
+                        <input placeholder="Укажите роль" class="form-control my-2  " ng-model="roleName">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light px-3 py-2 ml-0 rounded" ng-click="cancel()" >Закрыть</button>
+        <button type="button" class="btn btn-primary px-3 py-2 ml-0 rounded" ng-click="createRequest()" style="background-color: #7749f8">Создать</button>
+    </div>
+</div>
