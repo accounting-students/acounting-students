@@ -14,10 +14,18 @@
 
 <h3><a href="http://139.59.138.255:8080/">Демо версия web сайта</a></h2>
 Режимы доступа: 
-Student: student - student
+<br>
+Student: student - student 
+<br>
 University: university - university
+<br>
 Company: admin - admin
-
+<br>
+API EXAMPLE: 
+<br>
+http://139.59.138.255:8081/api/get_all_users
+<br>
+http://139.59.138.255:8081/api/get_comp?userID=1
 ## Цель информационной системы
 
 Непрерывное совершенствование поиска и развития кадров через внедрение ИС "Система учета практикантов"

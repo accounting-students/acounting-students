@@ -1,12 +1,12 @@
 'use strict';
 var ipAdress;
 // FOR LOCAL USAGE
-var serverUrlIndex = 1;
+var serverUrlIndex = 0;
 
 setIpAddress();
 
 function setIpAddress() {
-    if (serverUrlIndex == 0) ipAdress = "http://168.63.58.52:8081";
+    if (serverUrlIndex == 0) ipAdress = "http://139.59.138.255:8081";
     //local
     if (serverUrlIndex == 1) ipAdress = "http://127.0.0.1:8081";
 };

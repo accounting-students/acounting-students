@@ -100,16 +100,19 @@
                         <div class="col">
                             <div class="row" ng-repeat="competence in userProfile.competenceList">
                                 <div class="d-flex col-1" style="align-items: center; justify-content: center">
-                                    <p><i class="bi" ng-class="{'bi-check-square-fill':competence.isChecked, 'bi-square':!competence.isChecked}" style="color: grey"></i></p>
+                                    <p><i class="bi" ng-class="{'bi-check-square-fill':competence.isCheckedCompany, 'bi-square':!competence.isCheckedCompany}" style="color: grey"></i></p>
+                                </div>
+                                <div class="d-flex col-1" style="align-items: center; justify-content: center">
+                                    <p><i class="bi" ng-class="{'bi-check-square-fill':competence.isCheckedUniversity, 'bi-square':!competence.isCheckedUniversity}" style="color: grey"></i></p>
                                 </div>
                                 <div class="col">
                                     <p>{{competence.competenceName}}</p>
                                 </div>
                                 <div class="d-flex col-2" style="align-items: center; justify-content: center">
-                                    <p>{{competence.mentorLastName}}</p>
+                                    <p>{{competence.mentorCompany}}</p>
                                 </div>
                                 <div class="d-flex col-2" style="align-items: center; justify-content: center">
-                                    <p>{{competence.mentorFirstName}}</p>
+                                    <p>{{competence.mentorUniversity}}</p>
                                 </div>
                             </div>
                         </div>

@@ -1,9 +1,9 @@
-<div class="modal-content" style="border-radius: 10px">
+<div class="modal-content" style="border-radius: 10px; width: 650px !important;">
     <div class="modal-header">
         <h5 class="modal-title text-dark" id="staticBackdropLabel">О проекте</h5>
         <button type="button" class="close btn-sm" ng-click="close()"><i class="fas fa-times small"></i> </button>
     </div>
-    <div class="modal-body modal-body-full-height">
+    <div class="modal-body modal-body-full-height" style="width: 650px !important;">
         <div class="row">
             <div class="col d-flex flex-column">
                 <div class="row" style="margin-bottom: 10px">
@@ -41,7 +41,7 @@
                         <p style="color: grey">{{project.dateStart}} - {{project.dateEnd}}</p>
                     </div>
                 </div>
-                <div class="row" ng-show="user.userTypeId == universityUserTypeId">
+                <div class="row" >
                     <a class="col text-dark href-style" href="" ng-click="isAddStudent=!isAddStudent">Добавить студента на проект</a>
                 </div>
                 <div class="row" ng-if="isAddStudent">

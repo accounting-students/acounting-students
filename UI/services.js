@@ -353,10 +353,10 @@ services.factory('userService', function ($location, $http, $uibModal, $sce, $q,
     service.universityUserTypeId = 3;
 
     service.users = [
-        {competenceList:[{"competenceName":"Pk1 - test 234",isChecked:false, mentorLastName:"Фамилия", mentorFirstName:"Имя"},{isChecked:true,"competenceName":"Pk2 - test 234", mentorLastName:"Фамилия", mentorFirstName:"Имя"}], github:"qwe234",telegram:"qwe234",gitlab:"qwe234",skype:"asd11da23asd",universityName:"КГУ",email:"4test@test123", "phone":"1111123", patronymic:"Ммтрович", address:"Кострома, ул.Советская д.120", mainSpecialty:"Разработчик", "login": "admin", "password": "admin", "firstName":"Федор", "lastName":"Михайлов", "userId":1, "userTypeId": service.adminUserTypeId},
-        {competenceList:[{"competenceName":"Pk1 - test 234",isChecked:false, mentorLastName:"Иванов", mentorFirstName:"Олег"},{isChecked:false,"competenceName":"Pk2 - test 234", mentorLastName:"Фамилия", mentorFirstName:"Имя"}], github:"eqwea",telegram:"qweqweqwe",gitlab:"q12312we234",skype:"qwe234",universityName:"КГТУ",email:"5test@test123", "phone":"125553", patronymic:"Ммтрович", address:"Кострома, ул.Советская д.120", mainSpecialty:"Тестировщик", "login": "university", "password": "university", "firstName":"Универ", "lastName":"Универыч", "userId":2, "userTypeId": service.universityUserTypeId},
-        {competenceList:[{"competenceName":"Pk1 - test 234",isChecked:false, mentorLastName:"Алекссев", mentorFirstName:"Николай"},{isChecked:true,"competenceName":"Pk2 - test 234", mentorLastName:"Фамилия", mentorFirstName:"Имя"}], github:"asdasd",telegram:"qwe234",gitlab:"q12we234",skype:"qweasas",universityName:"Политех",email:"tes5t@sdatest123", "phone":"123444", patronymic:"Ммтрович", address:"Кострома, ул.Советская д.120", mainSpecialty:"Автотестировщик", "login": "student", "password": "student", "firstName":"Студент", "lastName":"Студентыч", "userId":3, "userTypeId": service.studentUserTypeId},
-        {competenceList:[{"competenceName":"Pk1 - test 234",isChecked:true, mentorLastName:"Алекссев", mentorFirstName:"Николай"},{isChecked:true,"competenceName":"Pk2 - test 234", mentorLastName:"Фамилия", mentorFirstName:"Имя"}], github:"asdasd",telegram:"qwe234",gitlab:"qw1211e234",skype:"qweqqqwesas",universityName:"Политех",email:"tasdes5t@test123", "phone":"123444", patronymic:"Ммтрович", address:"Кострома, ул.Советская д.120", mainSpecialty:"Разработчик", "login": "student1", "password": "student1", "firstName":"Студент1", "lastName":"Студентыч2", "userId":3, "userTypeId": service.studentUserTypeId}
+        {competenceList:[{"competenceName":"Pk1 - test 234","isCheckedCompany":true,"isCheckedUniversity":true,"mentorCompany":"Иванов","mentorUniversity":"Петров"},{"competenceName":"Pk2 - test 2123aedqw4","isCheckedCompany":true,"isCheckedUniversity":true,"mentorCompany":"Иванов","mentorUniversity":"Петров"}], github:"qwe234",telegram:"qwe234",gitlab:"qwe234",skype:"asd11da23asd",universityName:"КГУ",email:"4test@test123", "phone":"1111123", patronymic:"Ммтрович", address:"Кострома, ул.Советская д.120", mainSpecialty:"Разработчик", "login": "admin", "password": "admin", "firstName":"Федор", "lastName":"Михайлов", "userId":1, "userTypeId": service.adminUserTypeId},
+        {competenceList:[{"competenceName":"Pk1 - test 234","isCheckedCompany":true,"isCheckedUniversity":true,"mentorCompany":"Иванов","mentorUniversity":"Петров"},{"competenceName":"Pk2 - test 2123aedqw4","isCheckedCompany":true,"isCheckedUniversity":true,"mentorCompany":"Иванов","mentorUniversity":"Петров"}], github:"eqwea",telegram:"qweqweqwe",gitlab:"q12312we234",skype:"qwe234",universityName:"КГТУ",email:"5test@test123", "phone":"125553", patronymic:"Ммтрович", address:"Кострома, ул.Советская д.120", mainSpecialty:"Тестировщик", "login": "university", "password": "university", "firstName":"Универ", "lastName":"Универыч", "userId":2, "userTypeId": service.universityUserTypeId},
+        {competenceList:[{"competenceName":"Pk1 - test 234","isCheckedCompany":true,"isCheckedUniversity":true,"mentorCompany":"Иванов","mentorUniversity":"Петров"},{"competenceName":"Pk2 - test 2123aedqw4","isCheckedCompany":true,"isCheckedUniversity":true,"mentorCompany":"Иванов","mentorUniversity":"Петров"}], github:"asdasd",telegram:"qwe234",gitlab:"q12we234",skype:"qweasas",universityName:"Политех",email:"tes5t@sdatest123", "phone":"123444", patronymic:"Ммтрович", address:"Кострома, ул.Советская д.120", mainSpecialty:"Автотестировщик", "login": "student", "password": "student", "firstName":"Студент", "lastName":"Студентыч", "userId":3, "userTypeId": service.studentUserTypeId},
+        {competenceList:[{"competenceName":"Pk1 - test 234","isCheckedCompany":true,"isCheckedUniversity":true,"mentorCompany":"Иванов","mentorUniversity":"Петров"},{"competenceName":"Pk2 - test 2123aedqw4","isCheckedCompany":true,"isCheckedUniversity":true,"mentorCompany":"Иванов","mentorUniversity":"Петров"}], github:"asdasd",telegram:"qwe234",gitlab:"qw1211e234",skype:"qweqqqwesas",universityName:"Политех",email:"tasdes5t@test123", "phone":"123444", patronymic:"Ммтрович", address:"Кострома, ул.Советская д.120", mainSpecialty:"Разработчик", "login": "student1", "password": "student1", "firstName":"Студент1", "lastName":"Студентыч2", "userId":3, "userTypeId": service.studentUserTypeId}
     ];
 
     service.getStudents = function (){
@@ -377,15 +377,30 @@ services.factory('userService', function ($location, $http, $uibModal, $sce, $q,
 
     service.getAllUsers = function () {
          var deferred = $q.defer();
-         $http.get(ipAdress + "/api/getAllUsers").success(function (response) {
+         $http.get(ipAdress + "/api/get_all_users").success(function (response) {
              console.log(response)
              if(response.users) service.users = response.users;
+             response.users.map(function (e) {
+                 service.getUserCompetence(e.userId).then(function (comp) {
+                     e.competenceList = comp;
+                 })
+             })
 
              deferred.resolve(response);
          }).error(function () {
              deferred.resolve(service.users);
          });
          return deferred.promise;
+    }
+
+    service.getUserCompetence = function (userId) {
+        var deferred = $q.defer();
+        $http.get(ipAdress + "/api/get_comp?userID="+userId).success(function (response) {
+            deferred.resolve(response.competentions);
+        }).error(function () {
+            deferred.resolve([]);
+        });
+        return deferred.promise;
     }
 
     service.addUser = function (user) {
