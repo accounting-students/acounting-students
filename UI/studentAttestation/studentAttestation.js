@@ -2,7 +2,7 @@
 
 var StudentAttestationCtrl = angular.module('myApp.studentAttestation', ['ngRoute']);
 
-StudentAttestationCtrl.controller('StudentAttestationCtrl', function ($scope, commonsService, userService) {
+StudentAttestationCtrl.controller('StudentAttestationCtrl', function ($scope, commonsService, userService, infoService) {
 
     $scope.adminUserTypeId = userService.adminUserTypeId;
     var userInt = setInterval(function(){
@@ -24,11 +24,11 @@ StudentAttestationCtrl.controller('StudentAttestationCtrl', function ($scope, co
     $scope.studentsForEstimate = [];
 
     function getStudentsForEstimate(){
-        $scope.studentsForEstimate = commonsService.studens;
+        $scope.studentsForEstimate = commonsService.studensForEstimate;
     }
 
     $scope.approve = function(student){
-
+        infoService.openConfirmationModal("Подтверждение", "Вы действительно хотоите подтвердить аттестацию "+(($scope.user.userTypeId == $scope.adminUserTypeId) ? "стажёра" : "студента") + " <b>" + student.name  + "</b> ?");
     }
 
     $scope.sortType ='lastname';

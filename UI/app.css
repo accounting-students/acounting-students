@@ -13,6 +13,11 @@ body {
     padding-top: 4rem;
     font-size: 15px;
 }
+.modal-body-full-height {
+    max-height: 750px;
+    height: auto;
+    overflow-y: auto;
+}
 .modal-content{
     -webkit-border-radius: 12px !important;
     -moz-border-radius: 12px !important;
@@ -190,6 +195,10 @@ html{
 }
 .main-text-color {
     color:white;
+}
+.disabled {
+    pointer-events: none;
+    opacity:0.6;
 }
 .pointer{
     cursor: pointer;

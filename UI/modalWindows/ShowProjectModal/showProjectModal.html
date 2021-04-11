@@ -3,7 +3,7 @@
         <h5 class="modal-title text-dark" id="staticBackdropLabel">О проекте</h5>
         <button type="button" class="close btn-sm" ng-click="close()"><i class="fas fa-times small"></i> </button>
     </div>
-    <div class="modal-body">
+    <div class="modal-body modal-body-full-height">
         <div class="row">
             <div class="col d-flex flex-column">
                 <div class="row" style="margin-bottom: 10px">
@@ -32,13 +32,36 @@
                 <div class="row">
                     <div class="col">
                         <h6 class="text-dark">Назначенные студенты</h6>
-                        <p style="color: grey">{{project.students.join(", ")}}</p>
+                        <p style="color: grey"><span ng-repeat="student in project.students"><b class="bold">{{student.name}}</b> {{"("+student.role+") "}}<i  class="fa fa-times text-danger mr-3" title="Удалить студента с проекта"></i></span></p>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col">
                         <h6 class="text-dark">Сроки</h6>
                         <p style="color: grey">{{project.dateStart}} - {{project.dateEnd}}</p>
+                    </div>
+                </div>
+                <div class="row" ng-show="user.userTypeId == universityUserTypeId">
+                    <a class="col text-dark href-style" href="" ng-click="isAddStudent=!isAddStudent">Добавить студента на проект</a>
+                </div>
+                <div class="row" ng-if="isAddStudent">
+                    <h6 class="text-dark col mt-3 mb-0">Студент</h6>
+                    <select  ng-class="{'ng-invalids':isError && !student}" placeholder="Выберите студента" class="form-control my-2 mx-1" ng-model="studentModel">
+                        <option ng-repeat="student in students"
+                                value="{{student.lastName+ ' ' + student.firstName}}">
+                            {{student.lastName+ ' ' + student.firstName}}
+                        </option>
+                    </select>
+                    <h6 class="text-dark col mb-0">Роль</h6>
+                    <select  ng-class="{'ng-invalids':isError && !role}" placeholder="Выберите роль" class="form-control my-2 mx-1" ng-model="role">
+                        <option ng-repeat="role in roles"
+                                value="{{role.roleName}}">
+                            {{role.roleName}}
+                        </option>
+                    </select>
+                    <div class="">
+                        <button ng-class="{'disabled':!role && !studentModel}" title="Добавить студента на проект" ng-click="addStudentToProject(project.students, role, studentModel)" class="btn p-2"> <i class="fa fa-check fa-1x pointer text-success " ></i></button>
+                        <button title="Удалить добавление студента" ng-click="rejectAddStudentToProject()" class="btn p-2"> <i class="fa fa-times fa-1x pointer text-danger " ></i></button>
                     </div>
                 </div>
             </div>

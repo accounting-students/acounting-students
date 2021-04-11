@@ -10,8 +10,7 @@ CreateProjectCtrl.controller('CreateProjectCtrl', function ($scope, $timeout, $u
     $scope.universities = [];
     $scope.universities = JSON.parse(JSON.stringify(commonsService.universities));
     $scope.universities.unshift(universityDefault)
-
-    $scope.project.university = $scope.universities[0];
+    $scope.project.university = $scope.universities[0].universityName;
 
     $scope.addProject = function(){
         if($scope.project && $scope.project.projectName && $scope.project.description && $scope.project.dateStart && $scope.project.dateEnd) {

@@ -54,10 +54,10 @@
                         <a ng-class="{'active text-secondary': selectedPage == 'students'}"class="nav-link text-nowrap" href="#/students"><i class="fa fa-user  " style="margin-right: 5px;"></i>Студенты</a>
                     </li>
                     <li ng-show="user.userTypeId == universityUserTypeId || user.userTypeId == studentUserTypeId" ng-click="selectedPage='companies'" class="nav-item ml-2">
-                        <a ng-class="{'active text-secondary': selectedPage == 'companies'}"class="nav-link text-nowrap" href="#/companies"><i class="fa fa-user  " style="margin-right: 5px;"></i>IT-компании</a>
+                        <a ng-class="{'active text-secondary': selectedPage == 'companies'}"class="nav-link text-nowrap" href="#/companies"><i class="fa fa-building  " style="margin-right: 5px;"></i>IT-компании</a>
                     </li>
                     <li ng-show="user.userTypeId == studentUserTypeId" ng-click="selectedPage='profile'" class="nav-item ml-2">
-                        <a ng-class="{'active text-secondary': selectedPage == 'profile'}"class="nav-link text-nowrap" href="#/profile?userId={{user.userId}}"><i class="fa fa-user  " style="margin-right: 5px;"></i>Профиль</a>
+                        <a ng-class="{'active text-secondary': selectedPage == 'profile'}"class="nav-link text-nowrap" href="#/profile?userId={{user.userId}}"><i class="fa fa-info  " style="margin-right: 5px;"></i>Профиль</a>
                     </li>
                     <li ng-show="user.userTypeId == adminUserTypeId || user.userTypeId == universityUserTypeId " ng-click="selectedPage='results'" class="nav-item ml-2">
                         <a ng-class="{'active text-secondary': selectedPage == 'results'}"class="nav-link text-nowrap" href="#/results" ><i class="fa fa-clipboard  " style="margin-right: 5px;"></i>Аттестация студентов</a>

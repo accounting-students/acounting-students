@@ -131,23 +131,23 @@
                                 <table class="table">
                                     <thead>
                                     <tr style="height: 65px;">
-                                        <th class="text-dark pointer" width="50">№</th>
-                                        <th class="text-dark pointer" width="50">Статус</th>
-                                        <th class="text-dark pointer" width="150" ng-click="reverse1=!reverse1; order(reverse1, 'projectName')" >Название проекта</th>
-                                        <th class="text-dark pointer"  ng-click="reverse2=!reverse2; order(reverse2, 'universityName')">ВУЗ</th>
-                                        <th class="text-dark pointer"  ng-click="reverse3=!reverse3; order(reverse3, 'dateStart')">Дата начала</th>
-                                        <th class="text-dark pointer"  ng-click="reverse5=!reverse5; order(reverse5, 'dateEnd')">Дата окончания</th>
-                                        <th class="text-dark pointer"  ng-click="reverse4=!reverse4; order(reverse4, 'company')">Подробнее</th>
+                                        <th class="text-dark bold pointer" width="50">№</th>
+                                        <th class="text-dark bold pointer" width="50">Статус</th>
+                                        <th class="text-dark bold pointer text-nowrap" width="150" ng-click="reverse1=!reverse1; order(reverse1, 'projectName')" >Название проекта</th>
+                                        <th class="text-dark bold pointer"  ng-click="reverse2=!reverse2; order(reverse2, 'universityName')">ВУЗ</th>
+                                        <th class="text-dark bold pointer"  ng-click="reverse3=!reverse3; order(reverse3, 'dateStart')">Дата начала</th>
+                                        <th class="text-dark bold pointer"  ng-click="reverse3=!reverse5; order(reverse5, 'dateEnd')">Дата окончания</th>
+                                        <th class="text-dark bold pointer"  ng-click="reverse4=!reverse4; order(reverse4, 'company')">Подробнее</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     <tr ng-repeat="project in projects |orderObjectBy:sortType:reverse">
                                         <td>{{$index+1}}</td>
                                         <td>
-                                            {{project.projectName}}
+                                            <span class="badge rounded {{project.statusClass}}" >{{project.projectStatus}}</span>
                                         </td>
                                         <td>
-                                            <span class="badge rounded {{project.statusClass}}" >{{project.projectStatus}}</span>
+                                            {{project.projectName}}
                                         </td>
                                         <td>
                                             {{project.universityName}}

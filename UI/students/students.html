@@ -34,16 +34,16 @@
                             <tr ng-repeat="student in students | orderObjectBy:sortType:reverse">
                                 <td>{{$index+1}}</td>
                                 <td>
-                                    {{student.name}}
+                                    {{student.lastName + ' ' + student.firstName}}
                                 </td>
                                 <td>
-                                    {{student.university.universityName}}
+                                    {{student.universityName}}
                                 </td>
                                 <td>
-                                    {{student.specialty}}
+                                    {{student.mainSpecialty}}
                                 </td>
                                 <td>
-                                    <a ng-href="{{'#/profile?userId=' + student.studentId}}" class="href-style px-3 py-2 ml-0 rounded">Профиль</a>
+                                    <a ng-href="{{'#/profile?userId=' + student.userId}}" class="href-style px-3 py-2 ml-0 rounded">Профиль</a>
                                 </td>
                             </tr>
                             </tbody>

@@ -22,7 +22,7 @@ StudentsCtrl.controller('StudentsCtrl', function ($scope, commonsService, userSe
     }
 
     function getStudents(){
-        $scope.students = commonsService.studens;
+        $scope.students = userService.getStudents();
     }
 
     $scope.showUserProfile = function(){

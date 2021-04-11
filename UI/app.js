@@ -1,7 +1,7 @@
 'use strict';
 var ipAdress;
 // FOR LOCAL USAGE
-var serverUrlIndex = 0;
+var serverUrlIndex = 1;
 
 setIpAddress();
 

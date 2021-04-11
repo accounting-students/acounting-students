@@ -365,9 +365,18 @@ services.factory('userService', function ($location, $http, $uibModal, $sce, $q,
 
     service.users = [
         {competenceList:[{"competenceName":"Pk1 - test 234",isChecked:false, mentorLastName:"Фамилия", mentorFirstName:"Имя"},{isChecked:true,"competenceName":"Pk2 - test 234", mentorLastName:"Фамилия", mentorFirstName:"Имя"}], github:"qwe234",telegram:"qwe234",gitlab:"qwe234",skype:"asd11da23asd",universityName:"КГУ",email:"4test@test123", "phone":"1111123", patronymic:"Ммтрович", address:"Кострома, ул.Советская д.120", mainSpecialty:"Разработчик", "login": "admin", "password": "admin", "firstName":"Федор", "lastName":"Михайлов", "userId":1, "userTypeId": service.adminUserTypeId},
-        {competenceList:[{"competenceName":"Pk1 - test 234",isChecked:false, mentorLastName:"Фамилия", mentorFirstName:"Имя"},{isChecked:false,"competenceName":"Pk2 - test 234", mentorLastName:"Фамилия", mentorFirstName:"Имя"}], github:"eqwea",telegram:"qweqweqwe",gitlab:"q12312we234",skype:"qwe234",universityName:"КГТУ",email:"5test@test123", "phone":"125553", patronymic:"Ммтрович", address:"Кострома, ул.Советская д.120", mainSpecialty:"Тестировщик", "login": "university", "password": "university", "firstName":"Универ", "lastName":"Универыч", "userId":2, "userTypeId": service.universityUserTypeId},
-        {competenceList:[{"competenceName":"Pk1 - test 234",isChecked:true, mentorLastName:"Фамилия", mentorFirstName:"Имя"},{isChecked:true,"competenceName":"Pk2 - test 234", mentorLastName:"Фамилия", mentorFirstName:"Имя"}], github:"asdasd",telegram:"qwe234",gitlab:"qwe234",skype:"qweasas",universityName:"Политех",email:"tes5t@test123", "phone":"123444", patronymic:"Ммтрович", address:"Кострома, ул.Советская д.120", mainSpecialty:"", "login": "student", "password": "student", "firstName":"Студент", "lastName":"Студентыч", "userId":3, "userTypeId": service.studentUserTypeId}
+        {competenceList:[{"competenceName":"Pk1 - test 234",isChecked:false, mentorLastName:"Иванов", mentorFirstName:"Олег"},{isChecked:false,"competenceName":"Pk2 - test 234", mentorLastName:"Фамилия", mentorFirstName:"Имя"}], github:"eqwea",telegram:"qweqweqwe",gitlab:"q12312we234",skype:"qwe234",universityName:"КГТУ",email:"5test@test123", "phone":"125553", patronymic:"Ммтрович", address:"Кострома, ул.Советская д.120", mainSpecialty:"Тестировщик", "login": "university", "password": "university", "firstName":"Универ", "lastName":"Универыч", "userId":2, "userTypeId": service.universityUserTypeId},
+        {competenceList:[{"competenceName":"Pk1 - test 234",isChecked:false, mentorLastName:"Алекссев", mentorFirstName:"Николай"},{isChecked:true,"competenceName":"Pk2 - test 234", mentorLastName:"Фамилия", mentorFirstName:"Имя"}], github:"asdasd",telegram:"qwe234",gitlab:"q12we234",skype:"qweasas",universityName:"Политех",email:"tes5t@sdatest123", "phone":"123444", patronymic:"Ммтрович", address:"Кострома, ул.Советская д.120", mainSpecialty:"Автотестировщик", "login": "student", "password": "student", "firstName":"Студент", "lastName":"Студентыч", "userId":3, "userTypeId": service.studentUserTypeId},
+        {competenceList:[{"competenceName":"Pk1 - test 234",isChecked:true, mentorLastName:"Алекссев", mentorFirstName:"Николай"},{isChecked:true,"competenceName":"Pk2 - test 234", mentorLastName:"Фамилия", mentorFirstName:"Имя"}], github:"asdasd",telegram:"qwe234",gitlab:"qw1211e234",skype:"qweqqqwesas",universityName:"Политех",email:"tasdes5t@test123", "phone":"123444", patronymic:"Ммтрович", address:"Кострома, ул.Советская д.120", mainSpecialty:"Разработчик", "login": "student1", "password": "student1", "firstName":"Студент1", "lastName":"Студентыч2", "userId":3, "userTypeId": service.studentUserTypeId}
     ];
+
+    service.getStudents = function (){
+        var students = [];
+        service.users.map(function (e) {
+            if(e.userTypeId == service.studentUserTypeId) students.push(JSON.parse(JSON.stringify(e)))
+        })
+        return students;
+    }
 
     service.getUserById = function (userId){
         var user = null;
@@ -513,6 +522,8 @@ myApp.factory('commonsService', function ($http, $window, $q) {
 
     var service = {};
 
+    service.roles = [{"roleName":"Разработчик"}, {"roleName":"Тестировщик"}]
+
     service.companies = [
         {description:bigText, dateStart:"12.01.2020", dateEnd:"12.01.2022", companyName:"ММТР Технологии", direction:"direction1"},
         {description:bigText, dateStart:"12.01.2020", dateEnd:"12.01.2022", companyName:"Наймикс", direction:"direction1Test"},
@@ -524,16 +535,16 @@ myApp.factory('commonsService', function ($http, $window, $q) {
         {universityName:"test2",universityId:3, specialties:["test","test2","Аналитик"], free:15}
     ];
 
-    service.studens = [
-        {competenceList:['Умеет1','Умеет2','Умеет3'], studentId:1,name:"Вася Пупкин", specialty:"Разработчик", university:service.universities[0]},
-        {competenceList:['Умеет1','Умеет2','Умеет3'], studentId:2,name:"Вася Пупкин 2", specialty:"Тестировщик", university:service.universities[1]},
-        {competenceList:['Умеет1','Умеет2','Умеет3'], studentId:3,name:"Вася Пупкин 3", specialty:"Аналитик", university:service.universities[2]}
+    service.studensForEstimate = [
+        {competenceList:['Умеет1','Умеет2','Умеет3'], studentId:1,name:"Вася Пупкин", specialty:"Разработка", university:service.universities[0]},
+        {competenceList:['Умеет1','Умеет2','Умеет3'], studentId:2,name:"Вася Пупкин 2", specialty:"Тестирование", university:service.universities[1]},
+        {competenceList:['Умеет1','Умеет2','Умеет3'], studentId:3,name:"Вася Пупкин 3", specialty:"Аналитика", university:service.universities[2]}
     ];
 
     service.projects = [
-        {description:bigText, statusClass:"badge-success", projectStatus:"Принят", projectName:"Сделай то", dateStart:"12.01.2020", dateEnd:"12.01.2022", universityName:"КГУ",universityId:1},
-        {description:bigText, statusClass:"badge-secondary", projectStatus:"В рассмотрении", projectName:"Сделай это", dateStart:"12.01.2020", dateEnd:"12.01.2021", universityName:"КГТУ",universityId:2},
-        {description:bigText, statusClass:"badge-danger", projectStatus:"Отклонён", projectName:"И вот это",dateStart:"12.01.2020", dateEnd:"12.01.2023",  universityName:"ЯрДемид",universityId:3}
+        {students:[{name:"Вася Петин", role:"Разработчик"}, {name:"Людвиг IX", role:"Разработчик"}, {name:"Стас Михайлов", role:"Разработчик"}], description:bigText, statusClass:"badge-success", projectStatus:"Принят", projectName:"Сделай то", dateStart:"12.01.2020", dateEnd:"12.01.2022", universityName:"КГУ",universityId:1},
+        {students:[{name:"Вася Петин", role:"Разработчик"}, {name:"Людвиг IX", role:"Тестировщик"}, {name:"Стас Михайлов", role:"Тестировщик"}], description:bigText, statusClass:"badge-secondary", projectStatus:"На рассмотрении", projectName:"Сделай это", dateStart:"12.01.2020", dateEnd:"12.01.2021", universityName:"КГТУ",universityId:2},
+        {students:[{name:"Вася Петин", role:"Аналитик"}, {name:"Людвиг IX", role:"Разработчик"}, {name:"Стас Михайлов", role:"Тестировщик"}], description:bigText, statusClass:"badge-danger", projectStatus:"Отклонён", projectName:"И вот это",dateStart:"12.01.2020", dateEnd:"12.01.2023",  universityName:"ЯрДемид",universityId:3}
     ];
 
     return service;
@@ -630,7 +641,7 @@ myApp.factory('projectService', function ($http, $window, $q, $uibModal, commons
 
     service.addProject = function (project) {
         project.statusClass = "badge-secondary";
-        project.projectStatus = "В рассмотрении";
+        project.projectStatus = "На рассмотрении";
         var deferred = $q.defer();
         //$http.post(ipAdress + "/api/project/addProject", project).success(function (response) {
         commonsService.projects.push(project)
