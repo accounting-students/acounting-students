@@ -168,16 +168,14 @@ myApp.controller('UserCtrl', function ($scope, $rootScope, userService) { //эт
     };
 
     $scope.logIn = function(){
-
         var modalInstance = userService.openAuthModal();
         modalInstance.result.then(function (response) {
             if(userService.User) {
                 $scope.user = userService.User;
                 $scope.isAuthorized = true;
+                $rootScope.$broadcast('user:isActive', false);
             }
-
         }, function () {});
-
     }
 
     $scope.setSelectedTabInTab = function (value) {

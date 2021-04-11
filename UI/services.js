@@ -230,17 +230,6 @@ services.factory('userService', function ($location, $http, $uibModal, $sce, $q,
     service.defaultError = "Сервер недоступен. Неизвестная ошибка сервера";
     service.User = null;
 
-    service.showUserProfile = function(){
-        var props = {
-            animation: true,
-            backdrop: 'static',
-            keyboard: false,
-            templateUrl: 'modalWindows/AuthorizationModal/autorization.html',
-            controller: 'AutorizationCtrl',
-        };
-
-        return $uibModal.open(props);
-    }
 
     service.openAuthModal = function () {
         var props = {
@@ -387,15 +376,16 @@ services.factory('userService', function ($location, $http, $uibModal, $sce, $q,
     }
 
     service.getAllUsers = function () {
+         var deferred = $q.defer();
+         $http.get(ipAdress + "/api/getAllUsers").success(function (response) {
+             console.log(response)
+             if(response.users) service.users = response.users;
 
-        return service.users;
-        //var deferred = $q.defer();
-        //$http.get(ipAdress + "/api/user/getAll").success(function (response) {
-        //    deferred.resolve(response);
-        //}).error(function (error) {
-        //    deferred.reject(error);
-        //});
-        //return deferred.promise;
+             deferred.resolve(response);
+         }).error(function () {
+             deferred.resolve(service.users);
+         });
+         return deferred.promise;
     }
 
     service.addUser = function (user) {
@@ -432,18 +422,23 @@ services.factory('userService', function ($location, $http, $uibModal, $sce, $q,
     service.login = function (login, password) {
         var deferred = $q.defer();
         var response = {};
-        var users = service.getAllUsers();
-        var user = null;
-        users.map(function (e) {
-            if(e.login == login) user = e;
-        });
-        if(user && user.password == password) {
-            service.User = JSON.parse(JSON.stringify(user));
-            deferred.resolve(service.User);
-        } else {
-            response.message = "Неверно указан логин или пароль"
-            deferred.reject(response);
-        }
+        service.getAllUsers().then(function(){
+            var users = service.users
+            var user = null;
+            users.map(function (e) {
+                if(e.login == login) user = e;
+            });
+            if(user && user.password == password) {
+                service.User = JSON.parse(JSON.stringify(user));
+                deferred.resolve(service.User);
+            } else {
+                response.message = "Неверно указан логин или пароль"
+                deferred.reject(response);
+            }
+        }, function () {
+            deferred.reject(null);
+        })
+
         return deferred.promise;
     };
 
@@ -525,8 +520,8 @@ myApp.factory('commonsService', function ($http, $window, $q) {
     service.roles = [{"roleName":"Разработчик"}, {"roleName":"Тестировщик"}]
 
     service.companies = [
-        {description:bigText, dateStart:"12.01.2020", dateEnd:"12.01.2022", companyName:"ММТР Технологии", direction:"direction1"},
-        {description:bigText, dateStart:"12.01.2020", dateEnd:"12.01.2022", companyName:"Наймикс", direction:"direction1Test"},
+        {hrPhone:"+7912331122", description:bigText, dateStart:"12.01.2020", dateEnd:"12.01.2022", companyName:"ММТР Технологии", direction:"direction1"},
+        {hrPhone:"+7932134566", description:bigText, dateStart:"12.01.2020", dateEnd:"12.01.2022", companyName:"Наймикс", direction:"direction1Test"},
     ];
 
     service.universities = [
@@ -611,7 +606,7 @@ myApp.factory('projectService', function ($http, $window, $q, $uibModal, commons
 
     service.getAllProjects = function () {
         var deferred = $q.defer();
-        $http.get(ipAdress + "/api/project/getAllProjects" ).success(function (response) {
+        $http.get(ipAdress + "/api/project/get_all_projects" ).success(function (response) {
             deferred.resolve(response);
         }).error(function (error) {
             deferred.reject(error);

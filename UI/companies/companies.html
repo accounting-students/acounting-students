@@ -20,6 +20,7 @@
                             <tr style="height: 65px;">
                                 <th class="text-dark bold pointer" width="50">№</th>
                                 <th class="text-dark bold pointer">Название</th>
+                                <th ng-if="user.userTypeId != studentUserTypeId" class="text-dark bold pointer">Телефон кадров</th>
                                 <th class="text-dark bold pointer">Направление стажировки</th>
                             </tr>
                             </thead>
@@ -28,6 +29,9 @@
                                 <td>{{$index+1}}</td>
                                 <td>
                                     {{company.companyName}}
+                                </td>
+                                <td ng-if="user.userTypeId != studentUserTypeId">
+                                    {{company.hrPhone}}
                                 </td>
                                 <td>
                                     {{company.direction}}

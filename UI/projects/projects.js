@@ -20,7 +20,13 @@ createProject.controller('ProjectCtrl', function ($scope, userService, projectSe
 
 
     function getAllProjects(){
-        $scope.projects = commonsService.projects;
+        projectService.getAllProjects().then(function(response){
+            console.log(response)
+            $scope.projects = commonsService.projects;
+        },function () {
+            $scope.projects = commonsService.projects;
+        })
+
         tryDigest();
     }
     function tryDigest() {

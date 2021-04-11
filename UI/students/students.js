@@ -25,11 +25,7 @@ StudentsCtrl.controller('StudentsCtrl', function ($scope, commonsService, userSe
         $scope.students = userService.getStudents();
     }
 
-    $scope.showUserProfile = function(){
-        var modalInstance = userService.showUserProfile();
-        modalInstance.result.then(function (response) {
-        }, function () {});
-    }
+
 
     $scope.sortType ='lastname';
     $scope.reverse =true;

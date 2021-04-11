@@ -2,7 +2,7 @@
 
 var mainPage = angular.module('myApp.mainPage', ['ngRoute']);
 
-mainPage.controller('MainPageCtrl', function ($scope, userService, infoService ,  $rootScope, projectService, likeService) {
+mainPage.controller('MainPageCtrl', function ($scope, userService, infoService ,  $rootScope, projectService, $timeout) {
 
     var userInt = setInterval(function(){
         if(userService.User) {
@@ -15,9 +15,26 @@ mainPage.controller('MainPageCtrl', function ($scope, userService, infoService ,
     },300)
 
     function tryDigest() {
-        if (!$rootScope.$$phase) {
-            $rootScope.$apply();
+        if (!$scope.$$phase) {
+            $scope.$apply();
         }
+    }
+
+    $timeout(function(){
+        if(userService.User) $scope.isAuthorized = true;
+        else  $scope.isAuthorized = false;
+        tryDigest()
+    }, 150)
+
+    $scope.logIn = function(){
+        var modalInstance = userService.openAuthModal();
+        modalInstance.result.then(function (response) {
+            if(userService.User) {
+                $scope.user = userService.User;
+                $scope.isAuthorized = true;
+                $rootScope.$broadcast('user:isActive', false);
+            }
+        }, function () {});
     }
 
     $scope.project = [];
